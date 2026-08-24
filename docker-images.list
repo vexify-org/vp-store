@@ -21,4 +21,16 @@ elasticsearch:8    elasticsearch
 grafana/grafana:latest    grafana
 prom/prometheus:latest    prometheus
 portainer/portainer-ce:latest portainer
-# vPanel 商店离线镜像包；上传产物目录 dist/ 到 GitHub Releases（assets/images）即可
+# —— 大而常用的镜像（体积大，走离线加速更划算）——
+gitlab/gitlab-ce:latest          gitlab
+jenkins/jenkins:lts              jenkins
+apache/kafka:latest              kafka
+quay.io/keycloak/keycloak:latest keycloak
+minio/minio:latest               minio
+n8nio/n8n:latest                 n8n
+ollama/ollama:latest             ollama
+influxdb:2                       influxdb
+hashicorp/vault:latest           vault
+cassandra:5                      cassandra
+mcr.microsoft.com/mssql/server:2022-latest mssql
+# vPanel 商店离线镜像包；上传产物目录 docker/ 到 GitHub Releases（默认 /docker 目录）即可

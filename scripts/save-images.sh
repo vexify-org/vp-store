@@ -26,6 +26,17 @@ port_for() {
     grafana) echo 3000 ;;
     prometheus) echo 9090 ;;
     portainer) echo 9443 ;;
+    gitlab) echo 8080 ;;
+    jenkins) echo 8080 ;;
+    kafka) echo 9092 ;;
+    keycloak) echo 8080 ;;
+    minio) echo 9000 ;;
+    n8n) echo 5678 ;;
+    ollama) echo 11434 ;;
+    influxdb) echo 8086 ;;
+    vault) echo 8200 ;;
+    cassandra) echo 9042 ;;
+    mssql) echo 1433 ;;
     *) echo "" ;;
   esac
 }

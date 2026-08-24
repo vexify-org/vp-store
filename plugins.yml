@@ -62,3 +62,40 @@ plugins:
     desc: Docker 可视化管理面板镜像整包，离线导入即用
     zip: docker/portainer.zip
     kind: docker
+
+  # —— 大而常用的 docker 整包（需先在有 docker 的机器跑 scripts/save-images.sh 生成 zip）——
+  - id: docker-gitlab
+    name: GitLab CE（离线镜像）
+    desc: 代码托管/CI 一体平台整包，体积大、走离线更稳
+    zip: docker/gitlab.zip
+    kind: docker
+  - id: docker-jenkins
+    name: Jenkins（离线镜像）
+    desc: CI/CD 持续集成整包
+    zip: docker/jenkins.zip
+    kind: docker
+  - id: docker-kafka
+    name: Kafka（离线镜像）
+    desc: 分布式消息队列整包
+    zip: docker/kafka.zip
+    kind: docker
+  - id: docker-keycloak
+    name: Keycloak（离线镜像）
+    desc: 单点登录/身份认证平台整包
+    zip: docker/keycloak.zip
+    kind: docker
+  - id: docker-minio
+    name: MinIO（离线镜像）
+    desc: 对象存储服务整包
+    zip: docker/minio.zip
+    kind: docker
+  - id: docker-n8n
+    name: n8n（离线镜像）
+    desc: 可视化工作流自动化整包
+    zip: docker/n8n.zip
+    kind: docker
+  - id: docker-ollama
+    name: Ollama（离线镜像）
+    desc: 本地大模型推理运行时整包
+    zip: docker/ollama.zip
+    kind: docker

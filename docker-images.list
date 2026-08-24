@@ -1,0 +1,24 @@
+# 常用 Docker 镜像清单
+# 格式：镜像名:标签 产物别名  # 说明
+# 由 scripts/save-images.sh 逐行读取，docker save 压成 dist/<别名>.tar.gz。
+mysql:8            mysql
+redis:7            redis
+postgres:16        postgres
+mariadb:11         mariadb
+mongo:7            mongo
+nginx:alpine       nginx
+openresty:alpine   openresty
+php:8.3-fpm-alpine php
+node:20-alpine     node
+python:3.12-slim   python
+ubuntu:24.04       ubuntu
+debian:12-slim     debian
+alpine:3.20        alpine
+busybox:1.36       busybox
+traefik:v3         traefik
+rabbitmq:3-management rabbitmq
+elasticsearch:8    elasticsearch
+grafana/grafana:latest    grafana
+prom/prometheus:latest    prometheus
+portainer/portainer-ce:latest portainer
+# vPanel 商店离线镜像包；上传产物目录 dist/ 到 GitHub Releases（assets/images）即可

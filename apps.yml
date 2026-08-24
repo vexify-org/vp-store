@@ -36,6 +36,35 @@ apps:
       docker run -d --name portainer --restart=always -p 9443:9443 -p 8000:8000 \
         -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data \
         portainer/portainer-ce
+  # —— 以下为离线镜像安装（tarball 来自本仓库 GitHub Releases，脚本由 scripts/save-images.sh 生成）——
+  - id: mysql-offline
+    name: MySQL 8（离线镜像）
+    desc: 下载仓库内置 MySQL 镜像包并 docker load，免在线拉取
+    script: |
+      curl -fsSL {accel}https://github.com/vexify-org/vp-store/releases/latest/download/mysql.tar.gz -o /tmp/mysql.tar.gz
+      docker load -i /tmp/mysql.tar.gz
+      docker run -d --name mysql --restart=always -e MYSQL_ROOT_PASSWORD=change-me -p 3306:3306 mysql:8
+  - id: redis-offline
+    name: Redis 7（离线镜像）
+    desc: 下载仓库内置 Redis 镜像包并 docker load，免在线拉取
+    script: |
+      curl -fsSL {accel}https://github.com/vexify-org/vp-store/releases/latest/download/redis.tar.gz -o /tmp/redis.tar.gz
+      docker load -i /tmp/redis.tar.gz
+      docker run -d --name redis --restart=always -p 6379:6379 redis:7
+  - id: postgres-offline
+    name: PostgreSQL 16（离线镜像）
+    desc: 下载仓库内置 PostgreSQL 镜像包并 docker load，免在线拉取
+    script: |
+      curl -fsSL {accel}https://github.com/vexify-org/vp-store/releases/latest/download/postgres.tar.gz -o /tmp/postgres.tar.gz
+      docker load -i /tmp/postgres.tar.gz
+      docker run -d --name postgres --restart=always -e POSTGRES_PASSWORD=change-me -p 5432:5432 postgres:16
+  - id: nginx-offline
+    name: Nginx（离线镜像）
+    desc: 下载仓库内置 Nginx 镜像包并 docker load，免在线拉取
+    script: |
+      curl -fsSL {accel}https://github.com/vexify-org/vp-store/releases/latest/download/nginx.tar.gz -o /tmp/nginx.tar.gz
+      docker load -i /tmp/nginx.tar.gz
+      docker run -d --name nginx --restart=always -p 80:80 nginx:alpine
   - id: git
     name: Git
     desc: 分布式版本控制系统（apt 源）

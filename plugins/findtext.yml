@@ -1,0 +1,40 @@
+# findtext 插件：网页关键词计数。
+# 演示 fetch/双入参/while 逐段匹配统计出现次数。
+name: findtext
+version: 1.0.0
+desc: 网页关键词计数：抓取 URL，统计关键词出现次数
+url: plugins/findtext.yml
+
+tools:
+  - id: count
+    desc: 统计关键词在页面上出现的次数
+    params:
+      - id: url
+        name: URL
+        type: string
+        required: true
+        desc: 要检索的网址
+      - id: kw
+        name: 关键词
+        type: string
+        required: true
+        desc: 要统计出现的词
+    script: |
+      body = fetch(arg("url"), 10)
+      kw = arg("kw")
+      if body == "" || substr(body, 0, 6) == "(fetch"
+        ret("抓取失败，无法检索")
+      end
+      total = len(body)
+      kwlen = len(kw)
+      hit = 0
+      i = 0
+      while i + kwlen <= total
+        if substr(body, i, kwlen) == kw
+          hit = hit + 1
+          i = i + kwlen
+        else
+          i = i + 1
+        end
+      end
+      ret("关键词 [" + kw + "] 出现 " + itoa(hit) + " 次（页面长度 " + itoa(total) + "）")

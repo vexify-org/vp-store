@@ -15,3 +15,23 @@ plugins:
     name: webguard
     desc: 网站在线监测：设置监控 URL，定时探测 DOWN/UP 并累计记录失效/成功次数
     file: plugins/webguard.yml
+
+  - id: todo
+    name: todo
+    desc: 待办清单：KV 累加存储，可添加/查看/清空
+    file: plugins/todo.yml
+
+  - id: counter
+    name: counter
+    desc: 事件计数：KV 记次，可累加/查看/归零，含定时运行日志
+    file: plugins/counter.yml
+
+  - id: pagegrab
+    name: pagegrab
+    desc: 网页抓取：fetch 指定 URL 并返回前 N 个字符
+    file: plugins/pagegrab.yml
+
+  - id: findtext
+    name: findtext
+    desc: 网页关键词计数：抓取 URL，统计关键词出现次数
+    file: plugins/findtext.yml

@@ -1,0 +1,34 @@
+# counter 插件：事件计数与运行统计。
+# 演示 KV 记次/累加/定时任务周期日志。
+name: counter
+version: 1.0.0
+desc: 事件计数：KV 记次，可累加/查看/归零
+url: plugins/counter.yml
+
+tools:
+  - id: incr
+    desc: 计数 +1 并返回当前次数
+    script: |
+      n = atoi(kv_get("count")) + 1
+      kv_set("count", itoa(n))
+      ret("当前计数：" + itoa(n))
+
+  - id: show
+    desc: 查看当前计数与运行周次
+    script: |
+      ret("计数 " + itoa(atoi(kv_get("count"))) + "，运行 " + itoa(atoi(kv_get("run"))) + " 周次")
+
+  - id: reset
+    desc: 计数归零
+    script: |
+      kv_set("count", "0")
+      ret("计数已归零")
+
+tasks:
+  - id: tick
+    every: 60
+    desc: 每 60 秒把运行周次 +1 并记日志
+    script: |
+      run = atoi(kv_get("run")) + 1
+      kv_set("run", itoa(run))
+      log("运行周次 #" + itoa(run) + "，当前计数 " + kv_get("count"))

@@ -1,0 +1,31 @@
+# pagegrab 插件：网页抓取摘要。
+# 演示 fetch/入参默认值/失败判断/substr 截取。
+name: pagegrab
+version: 1.0.0
+desc: 网页抓取：fetch 指定 URL 并返回前 N 个字符
+url: plugins/pagegrab.yml
+
+tools:
+  - id: grab
+    desc: 抓取页面并返回前 max 个字符
+    params:
+      - id: url
+        name: URL
+        type: string
+        required: true
+        desc: 要抓取的网址，如 https://example.com
+      - id: max
+        name: 截断长度
+        type: int
+        required: false
+        desc: 返回的字符数上限，缺省 100
+    script: |
+      body = fetch(arg("url"), 10)
+      max = atoi(arg("max"))
+      if max <= 0
+        max = 100
+      end
+      if body == "" || substr(body, 0, 6) == "(fetch"
+        ret("抓取失败：" + substr(body, 0, 20))
+      end
+      ret("页面长度 " + itoa(len(body)) + "，预览：" + substr(body, 0, max))

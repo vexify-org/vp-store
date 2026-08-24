@@ -82,12 +82,12 @@ plugins:
   - id: docker-keycloak
     name: Keycloak（离线镜像）
     desc: 单点登录/身份认证平台整包
-    zip: docker/keycloak.zip
+    zip: https://github.com/vexify-org/vp-store/releases/download/docker-images-v1/keycloak.zip
     kind: docker
   - id: docker-minio
     name: MinIO（离线镜像）
     desc: 对象存储服务整包
-    zip: docker/minio.zip
+    zip: https://github.com/vexify-org/vp-store/releases/download/docker-images-v1/minio.zip
     kind: docker
   - id: docker-n8n
     name: n8n（离线镜像）
@@ -102,5 +102,5 @@ plugins:
   - id: docker-prometheus
     name: Prometheus（离线镜像）
     desc: 监控/告警平台整包（已实际打包入库）
-    zip: docker/prometheus.zip
+    zip: https://github.com/vexify-org/vp-store/releases/download/docker-images-v1/prometheus.zip
     kind: docker

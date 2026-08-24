@@ -99,3 +99,8 @@ plugins:
     desc: 本地大模型推理运行时整包
     zip: docker/ollama.zip
     kind: docker
+  - id: docker-prometheus
+    name: Prometheus（离线镜像）
+    desc: 监控/告警平台整包（已实际打包入库）
+    zip: docker/prometheus.zip
+    kind: docker

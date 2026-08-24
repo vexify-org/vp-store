@@ -1,0 +1,43 @@
+# todo 插件：待办清单管理。
+# 演示 KV 递增存储/while 拼接返回/清空；按索引记录每一条待办。
+name: todo
+version: 1.0.0
+desc: 待办清单：KV 累加存储，可添加/查看/清空
+url: plugins/todo.yml
+
+tools:
+  - id: add
+    desc: 添加一条待办
+    params:
+      - id: text
+        name: 内容
+        type: string
+        required: true
+        desc: 待办事项内容
+    script: |
+      n = atoi(kv_get("n"))
+      kv_set("t" + itoa(n), arg("text"))
+      n = n + 1
+      kv_set("n", itoa(n))
+      ret("已添加待办，共 " + itoa(n) + " 条")
+
+  - id: list
+    desc: 列出全部待办
+    script: |
+      n = atoi(kv_get("n"))
+      if n == 0
+        ret("暂无待办，请先用 add 添加")
+      end
+      out = "待办清单："
+      i = 0
+      while i < n
+        out = out + " | " + itoa(i) + "." + kv_get("t" + itoa(i))
+        i = i + 1
+      end
+      ret(out)
+
+  - id: clear
+    desc: 清空全部待办
+    script: |
+      kv_set("n", "0")
+      ret("已清空待办清单")

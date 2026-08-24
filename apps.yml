@@ -28,6 +28,44 @@ apps:
     script: |
       curl -fsSL {accel}https://caddyserver.com/api/download -o /usr/bin/caddy
       chmod +x /usr/bin/caddy
+  - id: portainer
+    name: Portainer
+    desc: Docker 可视化管理面板（官方容器，WebUI 走 9443 端口）
+    script: |
+      docker volume create portainer_data 2>/dev/null || true
+      docker run -d --name portainer --restart=always -p 9443:9443 -p 8000:8000 \
+        -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data \
+        portainer/portainer-ce
+  - id: git
+    name: Git
+    desc: 分布式版本控制系统（apt 源）
+    script: |
+      apt-get update -qq && apt-get install -y -qq git
+  - id: htop
+    name: htop
+    desc: 交互式进程/资源监视器（apt 源）
+    script: |
+      apt-get update -qq && apt-get install -y -qq htop
+  - id: tmux
+    name: tmux
+    desc: 终端复用器，多会话分屏（apt 源）
+    script: |
+      apt-get update -qq && apt-get install -y -qq tmux
+  - id: jq
+    name: jq
+    desc: 命令行 JSON 处理工具（apt 源）
+    script: |
+      apt-get update -qq && apt-get install -y -qq jq
+  - id: tree
+    name: tree
+    desc: 以树形结构展示目录内容（apt 源）
+    script: |
+      apt-get update -qq && apt-get install -y -qq tree
+  - id: screen
+    name: screen
+    desc: 终端会话管理器，后台运行程序（apt 源）
+    script: |
+      apt-get update -qq && apt-get install -y -qq screen
   - id: 0ad
     name: 0ad
     desc: 0ad

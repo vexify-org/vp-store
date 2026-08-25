@@ -1,0 +1,31 @@
+# sleep_log 插件：睡眠时长记录。
+# KV 累计睡眠小时数，可记录/查看/重置。
+name: sleep_log
+version: 1.0.0
+desc: 睡眠记录：累计睡眠小时数
+url: plugins/sleep_log.yml
+
+tools:
+  - id: sleep
+    desc: 记录一次睡眠时长
+    params:
+      - id: hours
+        name: 小时数
+        type: string
+        required: true
+        desc: 本次睡眠时长
+    script: |
+      cur = atoi(kv_get("sleep")) + atoi(arg("hours"))
+      kv_set("sleep", itoa(cur))
+      ret("累计睡眠 " + itoa(cur) + " 小时")
+
+  - id: show
+    desc: 查看累计睡眠时长
+    script: |
+      ret("累计睡眠 " + kv_get("sleep") + " 小时")
+
+  - id: reset
+    desc: 重置睡眠记录
+    script: |
+      kv_set("sleep", "0")
+      ret("睡眠记录已重置")

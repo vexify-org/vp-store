@@ -1,0 +1,39 @@
+# phone_check 插件：手机号格式校验。
+# 校验 11 位且以 1 开头。
+name: phone_check
+version: 1.0.0
+desc: 手机号校验：检查是否 11 位数字且以 1 开头
+url: plugins/phone_check.yml
+
+tools:
+  - id: check
+    desc: 校验手机号
+    params:
+      - id: phone
+        name: 手机号
+        type: string
+        required: true
+        desc: 要校验的号码
+    script: |
+      p = arg("phone")
+      if len(p) != 11
+        ret("无效：长度应为11位，当前" + itoa(len(p)))
+      end
+      if substr(p, 0, 1) != "1"
+        ret("无效：需以 1 开头")
+      end
+      ok = 1
+      i = 0
+      while i < 11
+        c = substr(p, i, 1)
+        a = atoi(c)
+        if a < 0 || a > 9
+          ok = 0
+        end
+        i = i + 1
+      end
+      if ok == 1
+        ret("格式有效")
+      else
+        ret("无效：含非数字字符")
+      end

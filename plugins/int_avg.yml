@@ -1,0 +1,28 @@
+# 平均值: 两数之和整除2(下取整)
+name: int_avg
+version: 1.0.0
+desc: 平均值: 两整数均值(下取整)
+url: plugins/int_avg.yml
+
+tools:
+  - id: do
+    desc: 求两数平均值(取整)
+    params:
+      - id: a
+        name: 数A
+        type: int
+        required: true
+        desc: 整数
+      - id: b
+        name: 数B
+        type: int
+        required: true
+        desc: 整数
+    script: |
+      t = atoi(arg("a")) + atoi(arg("b"))
+      q = 0
+      while t >= 2
+        t = t - 2
+        q = q + 1
+      end
+      ret("均值=" + itoa(q))

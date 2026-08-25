@@ -1,0 +1,40 @@
+# 项目清单: 多项目状态 增/列/清
+name: project_list
+version: 1.0.0
+desc: 项目清单: 项目 增/列/清
+url: plugins/project_list.yml
+
+tools:
+  - id: add
+    desc: 添加项目与状态
+    params:
+      - id: item
+        name: 项目
+        type: string
+        required: true
+        desc: 如 官网:进行中
+    script: |
+      n = atoi(kv_get("n"))
+      kv_set("pj" + itoa(n), arg("item"))
+      n = n + 1
+      kv_set("n", itoa(n))
+      ret("已加项目, 共 " + itoa(n) + " 个")
+  - id: list
+    desc: 列出项目
+    script: |
+      n = atoi(kv_get("n"))
+      if n == 0
+        ret("无项目")
+      end
+      o = "项目:"
+      i = 0
+      while i < n
+        o = o + " | " + itoa(i) + "." + kv_get("pj" + itoa(i))
+        i = i + 1
+      end
+      ret(o)
+  - id: clear
+    desc: 清空
+    script: |
+      kv_set("n", "0")
+      ret("项目已清空")

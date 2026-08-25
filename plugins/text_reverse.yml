@@ -1,0 +1,24 @@
+# 字符串反转: 从尾部逐字符倒序拼接
+name: text_reverse
+version: 1.0.0
+desc: 反转字符串: 倒序逐字符拼接
+url: plugins/text_reverse.yml
+
+tools:
+  - id: do
+    desc: 将输入字符串整体反转
+    params:
+      - id: s
+        name: 文本
+        type: string
+        required: true
+        desc: 要反转的内容
+    script: |
+      s = arg("s")
+      o = ""
+      i = len(s)
+      while i > 0
+        i = i - 1
+        o = o + substr(s, i, 1)
+      end
+      ret(o)

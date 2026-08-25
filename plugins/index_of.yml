@@ -1,0 +1,38 @@
+# 子串定位: 返回目标首次出现的下标; 未找到返回-1并在结尾标明
+name: index_of
+version: 1.0.0
+desc: 子串定位: 返回目标首次出现的下标
+url: plugins/index_of.yml
+
+tools:
+  - id: do
+    desc: 查找目标首次出现的下标
+    params:
+      - id: s
+        name: 源串
+        type: string
+        required: true
+        desc: 内容
+      - id: key
+        name: 关键字
+        type: string
+        required: true
+        desc: 要找的子串
+    script: |
+      s = arg("s")
+      k = arg("key")
+      found = -1
+      i = 0
+      while i + len(k) <= len(s)
+        if substr(s, i, len(k)) == k
+          found = i
+          i = len(s)
+        else
+          i = i + 1
+        end
+      end
+      if found < 0
+        ret("未找到")
+      else
+        ret("首次出现于下标 " + itoa(found))
+      end

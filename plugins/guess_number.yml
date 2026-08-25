@@ -1,0 +1,53 @@
+# guess_number 插件：猜数字游戏。
+# KV 预设一个目标，比较猜测并统计尝试次数。
+name: guess_number
+version: 1.0.0
+desc: 猜数字：猜一个 1..100 的数字
+url: plugins/guess_number.yml
+
+tools:
+  - id: new
+    desc: 开始新一局，设定目标
+    params:
+      - id: seed
+        name: 种子
+        type: string
+        required: false
+        desc: 用于生成目标
+    script: |
+      s = arg("seed")
+      if len(s) == 0
+        s = "guess"
+      end
+      d = atoi(substr(s, 0, 1))
+      target = 1 + (d % 100)
+      kv_set("target", itoa(target))
+      kv_set("tries", "0")
+      ret("新游戏开始，目标在 1..100 之间")
+
+  - id: guess
+    desc: 猜一个数字
+    params:
+      - id: n
+        name: 数字
+        type: string
+        required: true
+        desc: 你的猜测
+    script: |
+      target = atoi(kv_get("target"))
+      t = atoi(kv_get("tries")) + 1
+      kv_set("tries", itoa(t))
+      g = atoi(arg("n"))
+      if target == 0
+        ret("请先用 new 开始一局")
+      end
+      if g > target
+        ret("大了，这是第 " + itoa(t) + " 次尝试")
+      end
+      if g < target
+        ret("小了，这是第 " + itoa(t) + " 次尝试")
+      end
+      if g == target
+        kv_set("target", "0")
+        ret("猜对了！答案 " + arg("n") + "，共用 " + itoa(t) + " 次")
+      end

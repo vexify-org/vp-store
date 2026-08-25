@@ -1,0 +1,52 @@
+# tip_calc 插件：小费/分摊计算。
+# 按金额和百分比（用循环累加实现百分比）计算小费。
+name: tip_calc
+version: 1.0.0
+desc: 小费分摊：计算小费与人头均摊
+url: plugins/tip_calc.yml
+
+tools:
+  - id: compute
+    desc: 计算小费与人均
+    params:
+      - id: bill
+        name: 金额
+        type: string
+        required: true
+        desc: 消费金额
+      - id: pct
+        name: 百分比
+        type: string
+        required: true
+        desc: 如 15
+      - id: people
+        name: 分摊人数
+        type: string
+        required: false
+        desc: 缺省 1
+    script: |
+      bill = atoi(arg("bill"))
+      p = atoi(arg("pct"))
+      ppl = atoi(arg("people"))
+      if ppl <= 0
+        ppl = 1
+      end
+      # 小费 = bill * p / 100，用循环累加再除
+      total = 0
+      i = 0
+      while i < bill
+        total = total + p
+        i = i + 1
+      end
+      tip = 0
+      while total >= 100
+        tip = tip + 1
+        total = total - 100
+      end
+      totalbill = bill + tip
+      each = 0
+      while totalbill >= ppl
+        each = each + 1
+        totalbill = totalbill - ppl
+      end
+      ret("小费 " + itoa(tip) + "，应付 " + itoa(bill + tip) + "，" + itoa(ppl) + "人每人约 " + itoa(each))

@@ -1,0 +1,39 @@
+# 文本转小写: 用大写字母表做逐字符映射为小写
+name: text_lower
+version: 1.0.0
+desc: 文本转小写: 逐字符经字母表映射为小写
+url: plugins/text_lower.yml
+
+tools:
+  - id: do
+    desc: 把输入字符串全部转为小写
+    params:
+      - id: s
+        name: 文本
+        type: string
+        required: true
+        desc: 要转换的内容
+    script: |
+      s = arg("s")
+      lo = "abcdefghijklmnopqrstuvwxyz"
+      up = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+      o = ""
+      i = 0
+      while i < len(s)
+        ch = substr(s, i, 1)
+        p = -1
+        j = 0
+        while j < len(up)
+          if substr(up, j, 1) == ch
+            p = j
+          end
+          j = j + 1
+        end
+        if p >= 0
+          o = o + substr(lo, p, 1)
+        else
+          o = o + ch
+        end
+        i = i + 1
+      end
+      ret(o)

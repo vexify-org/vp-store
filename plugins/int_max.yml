@@ -1,0 +1,26 @@
+# 取较大值
+name: int_max
+version: 1.0.0
+desc: 取较大值: 比较返回较大数
+url: plugins/int_max.yml
+
+tools:
+  - id: do
+    desc: 返回两整数中较大者
+    params:
+      - id: a
+        name: 数A
+        type: int
+        required: true
+        desc: 整数
+      - id: b
+        name: 数B
+        type: int
+        required: true
+        desc: 整数
+    script: |
+      if atoi(arg("a")) >= atoi(arg("b"))
+        ret(arg("a"))
+      else
+        ret(arg("b"))
+      end

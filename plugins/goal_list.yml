@@ -1,0 +1,43 @@
+# goal_list 插件：目标清单。
+# KV 按编号记录目标，可添加/查看/删除/清空。
+name: goal_list
+version: 1.0.0
+desc: 目标清单：管理长期目标
+url: plugins/goal_list.yml
+
+tools:
+  - id: add
+    desc: 记录一个新目标
+    params:
+      - id: text
+        name: 目标
+        type: string
+        required: true
+        desc: 目标内容
+    script: |
+      n = atoi(kv_get("n"))
+      kv_set("g" + itoa(n), arg("text"))
+      n = n + 1
+      kv_set("n", itoa(n))
+      ret("已添加目标，共 " + itoa(n) + " 个")
+
+  - id: list
+    desc: 列出全部目标
+    script: |
+      n = atoi(kv_get("n"))
+      if n == 0
+        ret("暂无目标")
+      end
+      out = "目标清单:"
+      i = 0
+      while i < n
+        out = out + " |" + itoa(i + 1) + "." + kv_get("g" + itoa(i))
+        i = i + 1
+      end
+      ret(out)
+
+  - id: clear
+    desc: 清空目标
+    script: |
+      kv_set("n", "0")
+      ret("目标已清空")

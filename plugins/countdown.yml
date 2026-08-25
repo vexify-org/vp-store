@@ -1,0 +1,49 @@
+# countdown 插件：倒计时。
+# KV 设定目标秒数，任务每 30 秒递减并记日志。
+name: countdown
+version: 1.0.0
+desc: 倒计时：设定计时秒数，定时递减提醒
+url: plugins/countdown.yml
+
+tools:
+  - id: set
+    desc: 设置倒计时秒数
+    params:
+      - id: secs
+        name: 秒数
+        type: string
+        required: true
+        desc: 倒计时长度
+    script: |
+      kv_set("left", arg("secs"))
+      ret("倒计时设为 " + arg("secs") + " 秒")
+
+  - id: remain
+    desc: 查看剩余秒数
+    script: |
+      ret("剩余 " + kv_get("left") + " 秒")
+
+  - id: stop
+    desc: 停止倒计时
+    script: |
+      kv_set("left", "0")
+      ret("倒计时已停止")
+
+tasks:
+  - id: tick
+    every: 30
+    desc: 每 30 秒递减一次并记录日志
+    script: |
+      left = atoi(kv_get("left"))
+      if left > 0
+        left = left - 30
+        if left < 0
+          left = 0
+        end
+        kv_set("left", itoa(left))
+        if left == 0
+          log("倒计时结束！")
+        else
+          log("剩余 " + itoa(left) + " 秒")
+        end
+      end

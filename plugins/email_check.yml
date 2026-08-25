@@ -1,0 +1,42 @@
+# email_check 插件：邮箱格式校验。
+# 用 substr/扫描判断是否含 @ 且在点后。
+name: email_check
+version: 1.0.0
+desc: 邮箱校验：检查字符串基本邮箱格式
+url: plugins/email_check.yml
+
+tools:
+  - id: check
+    desc: 校验一个邮箱格式
+    params:
+      - id: email
+        name: 邮箱
+        type: string
+        required: true
+        desc: 要校验的地址
+    script: |
+      e = arg("email")
+      at = -1
+      i = 0
+      while i < len(e)
+        if substr(e, i, 1) == "@"
+          at = i
+        end
+        i = i + 1
+      end
+      if at <= 0
+        ret("无效：缺少 @ 或其前无字符")
+      end
+      dot = -1
+      j = at + 1
+      while j < len(e)
+        if substr(e, j, 1) == "."
+          dot = j
+        end
+        j = j + 1
+      end
+      if dot > at && dot < len(e) - 1
+        ret("格式有效：" + e)
+      else
+        ret("无效：@ 后缺少域名点")
+      end

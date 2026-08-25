@@ -1,0 +1,58 @@
+# scrum 插件：轻量任务看板。
+# KV 记录待办与已完成，类似看板两列。
+name: scrum
+version: 1.0.0
+desc: 任务看板：待办/进行中/已完成
+url: plugins/scrum.yml
+
+tools:
+  - id: todo
+    desc: 添加一个任务到待办
+    params:
+      - id: t
+        name: 任务
+        type: string
+        required: true
+        desc: 任务名称
+    script: |
+      n = atoi(kv_get("todos"))
+      kv_set("td" + itoa(n), arg("t"))
+      n = n + 1
+      kv_set("todos", itoa(n))
+      ret("已加入待办，共 " + itoa(n) + " 个")
+
+  - id: done
+    desc: 将第某号任务标记完成（从待办移除）
+    params:
+      - id: idx
+        name: 序号
+        type: string
+        required: true
+        desc: 待办序号（从 add 返回）
+    script: |
+      i = atoi(arg("idx"))
+      t = kv_get("td" + itoa(i))
+      d = atoi(kv_get("dones"))
+      kv_set("dn" + itoa(d), t)
+      d = d + 1
+      kv_set("dones", itoa(d))
+      ret("已完成：" + t)
+
+  - id: board
+    desc: 查看看板全部内容
+    script: |
+      n = atoi(kv_get("todos"))
+      out = "待办:"
+      i = 0
+      while i < n
+        out = out + " |" + itoa(i) + "." + kv_get("td" + itoa(i))
+        i = i + 1
+      end
+      d = atoi(kv_get("dones"))
+      out = out + "  已完成:"
+      j = 0
+      while j < d
+        out = out + " |" + itoa(j) + "." + kv_get("dn" + itoa(j))
+        j = j + 1
+      end
+      ret(out)

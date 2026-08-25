@@ -1,0 +1,40 @@
+# 书签收藏: 增/列/清
+name: bookmark
+version: 1.0.0
+desc: 书签收藏: 增/列/清空
+url: plugins/bookmark.yml
+
+tools:
+  - id: add
+    desc: 添加书签
+    params:
+      - id: url
+        name: 链接
+        type: string
+        required: true
+        desc: 网址
+    script: |
+      n = atoi(kv_get("n"))
+      kv_set("bm" + itoa(n), arg("url"))
+      n = n + 1
+      kv_set("n", itoa(n))
+      ret("已收藏, 共 " + itoa(n) + " 条")
+  - id: list
+    desc: 列出全部
+    script: |
+      n = atoi(kv_get("n"))
+      if n == 0
+        ret("暂无书签")
+      end
+      o = "书签:"
+      i = 0
+      while i < n
+        o = o + " | " + itoa(i) + "." + kv_get("bm" + itoa(i))
+        i = i + 1
+      end
+      ret(o)
+  - id: clear
+    desc: 清空
+    script: |
+      kv_set("n", "0")
+      ret("书签已清空")

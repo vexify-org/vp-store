@@ -1,0 +1,38 @@
+# 反序数字: 把十进制数位序颠倒
+name: reverse_number
+version: 1.0.0
+desc: 反序数字: 十进制数字位颠倒
+url: plugins/reverse_number.yml
+
+tools:
+  - id: do
+    desc: 反转十进制整数
+    params:
+      - id: n
+        name: 整数
+        type: int
+        required: true
+        desc: 任意整数
+    script: |
+      n = atoi(arg("n"))
+      neg = 0
+      if n < 0
+        neg = 1
+        n = 0 - n
+      end
+      r = 0
+      while n > 0
+        d = n
+        q = 0
+        while d >= 10
+          d = d - 10
+          q = q + 1
+        end
+        r = r + r + r + r + r + r + r + r + r + r + d
+        n = q
+      end
+      if neg == 1
+        ret("-" + itoa(r))
+      else
+        ret(itoa(r))
+      end

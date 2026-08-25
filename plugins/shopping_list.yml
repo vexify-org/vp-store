@@ -1,0 +1,40 @@
+# 购物清单: 增/列/清
+name: shopping_list
+version: 1.0.0
+desc: 购物清单: 增/列/清空
+url: plugins/shopping_list.yml
+
+tools:
+  - id: add
+    desc: 加入购物项
+    params:
+      - id: item
+        name: 物品
+        type: string
+        required: true
+        desc: 要买的
+    script: |
+      n = atoi(kv_get("n"))
+      kv_set("sh" + itoa(n), arg("item"))
+      n = n + 1
+      kv_set("n", itoa(n))
+      ret("已加, 共 " + itoa(n) + " 项")
+  - id: list
+    desc: 列出清单
+    script: |
+      n = atoi(kv_get("n"))
+      if n == 0
+        ret("购物单为空")
+      end
+      o = "购物:"
+      i = 0
+      while i < n
+        o = o + " | " + itoa(i) + "." + kv_get("sh" + itoa(i))
+        i = i + 1
+      end
+      ret(o)
+  - id: clear
+    desc: 清空
+    script: |
+      kv_set("n", "0")
+      ret("购物单已清空")

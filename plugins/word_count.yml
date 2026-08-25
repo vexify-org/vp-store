@@ -1,0 +1,32 @@
+# 单词计数: 按空格统计单词数并回显
+name: word_count
+version: 1.0.0
+desc: 单词计数: 按空格统计单词个数
+url: plugins/word_count.yml
+
+tools:
+  - id: do
+    desc: 统计空格分隔的单词个数
+    params:
+      - id: s
+        name: 文本
+        type: string
+        required: true
+        desc: 一句话或段落
+    script: |
+      s = arg("s")
+      cnt = 0
+      inw = 0
+      i = 0
+      while i < len(s)
+        if substr(s, i, 1) == " "
+          inw = 0
+        else
+          if inw == 0
+            cnt = cnt + 1
+            inw = 1
+          end
+        end
+        i = i + 1
+      end
+      ret("单词数=" + itoa(cnt))

@@ -1,0 +1,41 @@
+# domain_parse 插件：URL 拆解。
+# 从 URL 提取协议/主机/路径，用扫描定位 "://" 和 "/"。
+name: domain_parse
+version: 1.0.0
+desc: URL 拆解：提取协议与主机名
+url: plugins/domain_parse.yml
+
+tools:
+  - id: parse
+    desc: 解析一个 URL
+    params:
+      - id: url
+        name: URL
+        type: string
+        required: true
+        desc: 完整网址
+    script: |
+      u = arg("url")
+      proto = "未知"
+      rest = u
+      i = 0
+      while i + 2 < len(u)
+        if substr(u, i, 3) == "://"
+          proto = substr(u, 0, i)
+          rest = substr(u, i + 3, len(u) - i - 3)
+          i = len(u)
+        else
+          i = i + 1
+        end
+      end
+      host = rest
+      j = 0
+      while j < len(rest)
+        if substr(rest, j, 1) == "/"
+          host = substr(rest, 0, j)
+          j = len(rest)
+        else
+          j = j + 1
+        end
+      end
+      ret("协议 " + proto + "，主机 " + host)

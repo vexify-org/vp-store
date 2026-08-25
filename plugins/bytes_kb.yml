@@ -1,0 +1,23 @@
+# 存储换算: 字节→KB(÷1024)
+name: bytes_kb
+version: 1.0.0
+desc: 存储换算: 字节→KB
+url: plugins/bytes_kb.yml
+
+tools:
+  - id: do
+    desc: B÷1024→KB(取整)
+    params:
+      - id: value
+        name: 字节
+        type: int
+        required: true
+        desc: B
+    script: |
+      v = atoi(arg("value"))
+      q = 0
+      while v >= 1024
+        v = v - 1024
+        q = q + 1
+      end
+      ret("≈ " + itoa(q) + " KB (余 " + itoa(v) + " B)")

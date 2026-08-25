@@ -1,0 +1,29 @@
+# 距离换算: 千米→英里(×6/10 近似)
+name: km_miles
+version: 1.0.0
+desc: 距离换算: 千米→英里
+url: plugins/km_miles.yml
+
+tools:
+  - id: do
+    desc: km×0.6≈mi(整数近似)
+    params:
+      - id: value
+        name: 千米
+        type: int
+        required: true
+        desc: km
+    script: |
+      v = atoi(arg("value"))
+      r = 0
+      k = 0
+      while k < 6
+        r = r + v
+        k = k + 1
+      end
+      q = 0
+      while r >= 10
+        r = r - 10
+        q = q + 1
+      end
+      ret("≈ " + itoa(q) + " mi")

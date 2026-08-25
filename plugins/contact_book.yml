@@ -1,0 +1,40 @@
+# 通讯录: 联系人 增/列/清
+name: contact_book
+version: 1.0.0
+desc: 通讯录: 联系人 增/列/清
+url: plugins/contact_book.yml
+
+tools:
+  - id: add
+    desc: 添加联系人(姓名:电话)
+    params:
+      - id: contact
+        name: 联系人
+        type: string
+        required: true
+        desc: 如 张三:138000
+    script: |
+      n = atoi(kv_get("n"))
+      kv_set("c" + itoa(n), arg("contact"))
+      n = n + 1
+      kv_set("n", itoa(n))
+      ret("已存联系人, 共 " + itoa(n) + " 位")
+  - id: list
+    desc: 列出全部
+    script: |
+      n = atoi(kv_get("n"))
+      if n == 0
+        ret("通讯录为空")
+      end
+      o = "通讯录:"
+      i = 0
+      while i < n
+        o = o + " | " + itoa(i) + "." + kv_get("c" + itoa(i))
+        i = i + 1
+      end
+      ret(o)
+  - id: clear
+    desc: 清空
+    script: |
+      kv_set("n", "0")
+      ret("通讯录已清空")

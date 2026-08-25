@@ -1,0 +1,36 @@
+# 子串截取: 按起始与长度取子串, 越界自动收敛
+name: substr_tool
+version: 1.0.0
+desc: 子串截取: 按起始位置和长度取子串
+url: plugins/substr_tool.yml
+
+tools:
+  - id: do
+    desc: 提取子串
+    params:
+      - id: s
+        name: 源串
+        type: string
+        required: true
+        desc: 内容
+      - id: start
+        name: 起始
+        type: int
+        required: true
+        desc: 下标, 从0开始
+      - id: length
+        name: 长度
+        type: int
+        required: true
+        desc: 取多少字符
+    script: |
+      s = arg("s")
+      st = atoi(arg("start"))
+      ln = atoi(arg("length"))
+      if st < 0
+        st = 0
+      end
+      if ln < 0
+        ln = 0
+      end
+      ret(substr(s, st, ln))

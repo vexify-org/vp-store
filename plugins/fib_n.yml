@@ -1,0 +1,33 @@
+# 斐波那契: 求第 N 项(1,1,2,3,5...)
+name: fib_n
+version: 1.0.0
+desc: 斐波那契: 求第 N 项
+url: plugins/fib_n.yml
+
+tools:
+  - id: do
+    desc: 求第N项斐波那契
+    params:
+      - id: n
+        name: 序数
+        type: int
+        required: true
+        desc: 从1开始
+    script: |
+      n = atoi(arg("n"))
+      if n <= 0
+        ret("需大于0")
+      end
+      if n == 1 || n == 2
+        ret("F(1)=1,F(2)=1")
+      end
+      a = 1
+      b = 1
+      c = 3
+      while c < n
+        t = a + b
+        a = b
+        b = t
+        c = c + 1
+      end
+      ret("F(" + itoa(n) + ")=" + itoa(b))

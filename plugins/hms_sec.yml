@@ -1,0 +1,41 @@
+# 时:分:秒→总秒数
+name: hms_sec
+version: 1.0.0
+desc: 用时转换: 时:分:秒→总秒数
+url: plugins/hms_sec.yml
+
+tools:
+  - id: do
+    desc: h/m/s 转为总秒数
+    params:
+      - id: h
+        name: 时
+        type: int
+        required: true
+        desc: 小时
+      - id: m
+        name: 分
+        type: int
+        required: true
+        desc: 分钟
+      - id: s
+        name: 秒
+        type: int
+        required: true
+        desc: 秒
+    script: |
+      t = atoi(arg("h"))
+      r = 0
+      k = 0
+      while k < 60
+        r = r + t
+        k = k + 1
+      end
+      t = r + atoi(arg("m"))
+      r = 0
+      k = 0
+      while k < 60
+        r = r + t
+        k = k + 1
+      end
+      ret(itoa(r + atoi(arg("s"))) + " 秒")

@@ -1,0 +1,43 @@
+# go_fish 插件：接龙字母记忆。
+# 记录输入的单词序列，支持回顾（练习类小游戏）。
+name: go_fish
+version: 1.0.0
+desc: 接龙记忆：记录单词序列并回顾
+url: plugins/go_fish.yml
+
+tools:
+  - id: add
+    desc: 加入一个词
+    params:
+      - id: word
+        name: 单词
+        type: string
+        required: true
+        desc: 要记住的词
+    script: |
+      n = atoi(kv_get("n"))
+      kv_set("w" + itoa(n), arg("word"))
+      n = n + 1
+      kv_set("n", itoa(n))
+      ret("已记住 " + itoa(n) + " 个词")
+
+  - id: recall
+    desc: 回顾全部已记录的词
+    script: |
+      n = atoi(kv_get("n"))
+      if n == 0
+        ret("还没记录词")
+      end
+      out = ""
+      i = 0
+      while i < n
+        out = out + kv_get("w" + itoa(i)) + " "
+        i = i + 1
+      end
+      ret(out)
+
+  - id: reset
+    desc: 清空记忆
+    script: |
+      kv_set("n", "0")
+      ret("记忆已清空")

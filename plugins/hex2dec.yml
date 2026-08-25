@@ -1,0 +1,37 @@
+# 十六进制转十进制: 解析0-9a-f串
+name: hex2dec
+version: 1.0.0
+desc: 十六进制转十进制: 解析0-9a-f
+url: plugins/hex2dec.yml
+
+tools:
+  - id: do
+    desc: 十六进制串转十进制
+    params:
+      - id: h
+        name: 十六进制
+        type: string
+        required: true
+        desc: 如 ff12 或 0x1a
+    script: |
+      h = arg("h")
+      if substr(h, 0, 2) == "0x"
+        h = substr(h, 2, len(h) - 2)
+      end
+      tbl = "0123456789abcdef"
+      v = 0
+      i = 0
+      while i < len(h)
+        ch = substr(h, i, 1)
+        val = 0
+        j = 0
+        while j < len(tbl)
+          if substr(tbl, j, 1) == ch
+            val = j
+          end
+          j = j + 1
+        end
+        v = v + v + v + v + v + v + v + v + v + v + v + v + v + v + v + v + val
+        i = i + 1
+      end
+      ret("十进制=" + itoa(v))

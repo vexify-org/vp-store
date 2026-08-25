@@ -1,0 +1,28 @@
+# 秒数→时:分:秒
+name: sec_hms
+version: 1.0.0
+desc: 用时转换: 秒数→时:分:秒
+url: plugins/sec_hms.yml
+
+tools:
+  - id: do
+    desc: 把总秒数格式化为 H:M:S
+    params:
+      - id: s
+        name: 秒数
+        type: int
+        required: true
+        desc: total seconds
+    script: |
+      s = atoi(arg("s"))
+      hh = 0
+      while s >= 3600
+        s = s - 3600
+        hh = hh + 1
+      end
+      mm = 0
+      while s >= 60
+        s = s - 60
+        mm = mm + 1
+      end
+      ret(itoa(hh) + ":" + itoa(mm) + ":" + itoa(s))

@@ -1,0 +1,44 @@
+# random_range 插件：区间伪随机数。
+name: random_range
+version: 1.0.0
+desc: 伪随机数：在 [min, max] 内按种子取值
+url: plugins/random_range.yml
+
+tools:
+  - id: next
+    desc: 生成一个区间内的随机数
+    params:
+      - id: min
+        name: 最小值
+        type: string
+        required: true
+        desc: 区间下界
+      - id: max
+        name: 最大值
+        type: string
+        required: true
+        desc: 区间上界
+      - id: seed
+        name: 种子
+        type: string
+        required: false
+        desc: 随机种子
+    script: |
+      lo = atoi(arg("min"))
+      hi = atoi(arg("max"))
+      span = hi - lo + 1
+      if span <= 0
+        ret("无效区间")
+      end
+      cnt = atoi(kv_get("n"))
+      s = arg("seed")
+      if len(s) == 0
+        s = "rand"
+      end
+      idx = cnt
+      while idx >= len(s)
+        idx = idx - len(s)
+      end
+      d = atoi(substr(s, idx, 1))
+      kv_set("n", itoa(cnt + 1))
+      ret(itoa(lo + (d % span)))

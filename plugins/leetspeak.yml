@@ -1,0 +1,49 @@
+# leetspeak 插件：文本替换花招。
+# 扫描文本把常用字母替换为风格字符。
+name: leetspeak
+version: 1.0.0
+desc: 风格替换：把文本中字母替换为花招字符
+url: plugins/leetspeak.yml
+
+tools:
+  - id: convert
+    desc: 转换为风格文本
+    params:
+      - id: text
+        name: 文本
+        type: string
+        required: true
+        desc: 原文本
+    script: |
+      t = arg("text")
+      table = "a4bBcE3g9s5t7o0l1i1"
+      out = ""
+      i = 0
+      while i < len(t)
+        c = substr(t, i, 1)
+        r = c
+        if c == "a" || c == "A"
+          r = "4"
+        end
+        if c == "e" || c == "E"
+          r = "3"
+        end
+        if c == "i" || c == "I" || c == "l" || c == "L"
+          r = "1"
+        end
+        if c == "o" || c == "O"
+          r = "0"
+        end
+        if c == "s" || c == "S"
+          r = "5"
+        end
+        if c == "g" || c == "G"
+          r = "9"
+        end
+        if c == "t" || c == "T"
+          r = "7"
+        end
+        out = out + r
+        i = i + 1
+      end
+      ret(out)

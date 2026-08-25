@@ -1,0 +1,29 @@
+# 质量换算: 千克→磅(×22/10 整数近似)
+name: kg_lb
+version: 1.0.0
+desc: 质量换算: 千克→磅
+url: plugins/kg_lb.yml
+
+tools:
+  - id: do
+    desc: kg ×2.2 ≈ lb(整数近似)
+    params:
+      - id: value
+        name: 千克
+        type: int
+        required: true
+        desc: kg
+    script: |
+      v = atoi(arg("value"))
+      r = 0
+      k = 0
+      while k < 22
+        r = r + v
+        k = k + 1
+      end
+      q = 0
+      while r >= 10
+        r = r - 10
+        q = q + 1
+      end
+      ret("≈ " + itoa(q) + " lb")

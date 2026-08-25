@@ -1,0 +1,59 @@
+# 最小公倍数: 由 gcd 推 lcm=a*b/gcd
+name: lcm
+version: 1.0.0
+desc: 最小公倍数: 由最大公约数推算
+url: plugins/lcm.yml
+
+tools:
+  - id: do
+    desc: 求两数最小公倍数
+    params:
+      - id: a
+        name: 数A
+        type: int
+        required: true
+        desc: 整数
+      - id: b
+        name: 数B
+        type: int
+        required: true
+        desc: 整数
+    script: |
+      a = atoi(arg("a"))
+      b = atoi(arg("b"))
+      if a < 0
+        a = 0 - a
+      end
+      if b < 0
+        b = 0 - b
+      end
+      x = a
+      y = b
+      while y > 0
+        r = x
+        q = 0
+        while r >= y
+          r = r - y
+          q = q + 1
+        end
+        x = y
+        y = r
+      end
+      # 若有一个为0则lcm=0
+      if a == 0 || b == 0
+        ret("lcm=0")
+      end
+      # prod = a*b (循环加法)
+      prod = 0
+      k = 0
+      while k < b
+        prod = prod + a
+        k = k + 1
+      end
+      # lcm = prod / x (循环减法)
+      lv = 0
+      while prod >= x
+        prod = prod - x
+        lv = lv + 1
+      end
+      ret("lcm=" + itoa(lv))

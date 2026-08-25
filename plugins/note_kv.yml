@@ -1,0 +1,49 @@
+# 便签: 单条或多条备注(KV)
+name: note_kv
+version: 1.0.0
+desc: 便签: 记录/读取待办备注
+url: plugins/note_kv.yml
+
+tools:
+  - id: set
+    desc: 写入一条便签
+    params:
+      - id: key
+        name: 键
+        type: string
+        required: true
+        desc: 便签名
+      - id: text
+        name: 内容
+        type: string
+        required: true
+        desc: 便签文本
+    script: |
+      kv_set("note:" + arg("key"), arg("text"))
+      ret("已写便签 [" + arg("key") + "]")
+  - id: get
+    desc: 读取一条便签
+    params:
+      - id: key
+        name: 键
+        type: string
+        required: true
+        desc: 便签名
+    script: |
+      v = kv_get("note:" + arg("key"))
+      if v == ""
+        ret("便签 [" + arg("key") + "] 为空")
+      else
+        ret(v)
+      end
+  - id: clear
+    desc: 删除一条便签
+    params:
+      - id: key
+        name: 键
+        type: string
+        required: true
+        desc: 便签名
+    script: |
+      kv_set("note:" + arg("key"), "")
+      ret("已删除便签 [" + arg("key") + "]")

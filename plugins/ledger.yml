@@ -1,0 +1,59 @@
+# ledger 插件：收支记账本。
+# KV 累计总收入/总支出，可记账/查看/结算。
+name: ledger
+version: 1.0.0
+desc: 收支记账：记录收入/支出，累计合计
+url: plugins/ledger.yml
+
+tools:
+  - id: in
+    desc: 记一笔收入
+    params:
+      - id: amt
+        name: 金额
+        type: string
+        required: true
+        desc: 收入金额
+      - id: note
+        name: 备注
+        type: string
+        required: false
+        desc: 说明文字
+    script: |
+      a = atoi(arg("amt"))
+      cur = atoi(kv_get("in")) + a
+      kv_set("in", itoa(cur))
+      ret("记收入 " + arg("amt") + "，累计 " + itoa(cur))
+
+  - id: out
+    desc: 记一笔支出
+    params:
+      - id: amt
+        name: 金额
+        type: string
+        required: true
+        desc: 支出金额
+      - id: note
+        name: 备注
+        type: string
+        required: false
+        desc: 说明文字
+    script: |
+      a = atoi(arg("amt"))
+      cur = atoi(kv_get("out")) + a
+      kv_set("out", itoa(cur))
+      ret("记支出 " + arg("amt") + "，累计 " + itoa(cur))
+
+  - id: show
+    desc: 查看收支汇总与结余
+    script: |
+      i = atoi(kv_get("in"))
+      o = atoi(kv_get("out"))
+      ret("收入 " + itoa(i) + " 支出 " + itoa(o) + " 结余 " + itoa(i - o))
+
+  - id: clear
+    desc: 清空全部账目
+    script: |
+      kv_set("in", "0")
+      kv_set("out", "0")
+      ret("账目已清空")

@@ -1,0 +1,40 @@
+# 最大公约数: 辗转相减/相除求 gcd
+name: gcd
+version: 1.0.0
+desc: 最大公约数: 辗转求两数公因数
+url: plugins/gcd.yml
+
+tools:
+  - id: do
+    desc: 求两数最大公约数
+    params:
+      - id: a
+        name: 数A
+        type: int
+        required: true
+        desc: 整数
+      - id: b
+        name: 数B
+        type: int
+        required: true
+        desc: 整数
+    script: |
+      a = atoi(arg("a"))
+      b = atoi(arg("b"))
+      if a < 0
+        a = 0 - a
+      end
+      if b < 0
+        b = 0 - b
+      end
+      while b > 0
+        r = a
+        q = 0
+        while r >= b
+          r = r - b
+          q = q + 1
+        end
+        a = b
+        b = r
+      end
+      ret("gcd=" + itoa(a))

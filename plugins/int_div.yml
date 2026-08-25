@@ -1,0 +1,32 @@
+# 整除器: 循环减法求商与余数
+name: int_div
+version: 1.0.0
+desc: 整除器: 求商与余数
+url: plugins/int_div.yml
+
+tools:
+  - id: do
+    desc: 求 a/b 的商和余数
+    params:
+      - id: a
+        name: 被除数
+        type: int
+        required: true
+        desc: 整数
+      - id: b
+        name: 除数
+        type: int
+        required: true
+        desc: 非零整数
+    script: |
+      a = atoi(arg("a"))
+      b = atoi(arg("b"))
+      if b == 0
+        ret("除数不能为0")
+      end
+      q = 0
+      while a >= b
+        a = a - b
+        q = q + 1
+      end
+      ret("商=" + itoa(q) + " 余=" + itoa(a))

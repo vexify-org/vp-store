@@ -1,0 +1,29 @@
+# 距离换算: 英里→千米(×16/10 近似)
+name: miles_km
+version: 1.0.0
+desc: 距离换算: 英里→千米
+url: plugins/miles_km.yml
+
+tools:
+  - id: do
+    desc: mi×1.6≈km(整数近似)
+    params:
+      - id: value
+        name: 英里
+        type: int
+        required: true
+        desc: mi
+    script: |
+      v = atoi(arg("value"))
+      r = 0
+      k = 0
+      while k < 16
+        r = r + v
+        k = k + 1
+      end
+      q = 0
+      while r >= 10
+        r = r - 10
+        q = q + 1
+      end
+      ret("≈ " + itoa(q) + " km")

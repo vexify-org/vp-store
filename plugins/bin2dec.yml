@@ -1,0 +1,27 @@
+# 二进制转十进制: 逐位累乘2
+name: bin2dec
+version: 1.0.0
+desc: 二进制转十进制: 逐位累乘2
+url: plugins/bin2dec.yml
+
+tools:
+  - id: do
+    desc: 二进制串转十进制
+    params:
+      - id: b
+        name: 二进制
+        type: string
+        required: true
+        desc: 仅含0/1的串
+    script: |
+      b = arg("b")
+      v = 0
+      i = 0
+      while i < len(b)
+        v = v + v
+        if substr(b, i, 1) == "1"
+          v = v + 1
+        end
+        i = i + 1
+      end
+      ret("十进制=" + itoa(v))

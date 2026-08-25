@@ -1,0 +1,57 @@
+# reading_progress 插件：阅读进度。
+# KV 记录书目页码进度与总页数，计算完成度。
+name: reading_progress
+version: 1.0.0
+desc: 阅读进度：记录当前页/总页数，计算完成度
+url: plugins/reading_progress.yml
+
+tools:
+  - id: set
+    desc: 设置某本书的页数
+    params:
+      - id: book
+        name: 书名
+        type: string
+        required: true
+        desc: 书名
+      - id: total
+        name: 总页数
+        type: string
+        required: true
+        desc: 全书总页数
+    script: |
+      kv_set("rp:" + arg("book") + ":t", arg("total"))
+      ret("[" + arg("book") + "] 总页数 " + arg("total"))
+
+  - id: page
+    desc: 更新当前读到第几页
+    params:
+      - id: book
+        name: 书名
+        type: string
+        required: true
+        desc: 书名
+      - id: cur
+        name: 当前页
+        type: string
+        required: true
+        desc: 已读到的页码
+    script: |
+      kv_set("rp:" + arg("book") + ":c", arg("cur"))
+      ret("[" + arg("book") + "] 已读至第 " + arg("cur") + " 页")
+
+  - id: status
+    desc: 查看某本书进度
+    params:
+      - id: book
+        name: 书名
+        type: string
+        required: true
+        desc: 书名
+    script: |
+      cur = atoi(kv_get("rp:" + arg("book") + ":c"))
+      total = atoi(kv_get("rp:" + arg("book") + ":t"))
+      if total <= 0
+        ret("[" + arg("book") + "] 未设置总页数，请先 set")
+      end
+      ret("[" + arg("book") + "] 第 " + itoa(cur) + "/" + itoa(total) + " 页")

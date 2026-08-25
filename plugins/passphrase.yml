@@ -1,0 +1,42 @@
+# passphrase 插件：随机口令生成。
+# 基于种子字符串循环取字符，拼出指定长度的口令。
+name: passphrase
+version: 1.0.0
+desc: 随机口令：按种子生成指定长度字符串
+url: plugins/passphrase.yml
+
+tools:
+  - id: gen
+    desc: 生成口令
+    params:
+      - id: length
+        name: 长度
+        type: string
+        required: true
+        desc: 口令长度
+      - id: seed
+        name: 种子
+        type: string
+        required: true
+        desc: 随机种子字符串
+    script: |
+      n = atoi(arg("length"))
+      s = arg("seed")
+      if n <= 0
+        ret("长度需大于0")
+      end
+      if len(s) == 0
+        ret("种子不能为空")
+      end
+      out = ""
+      i = 0
+      k = 0
+      while i < n
+        if k >= len(s)
+          k = 0
+        end
+        out = out + substr(s, k, 1)
+        k = k + 1
+        i = i + 1
+      end
+      ret(out)

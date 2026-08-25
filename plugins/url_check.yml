@@ -1,0 +1,24 @@
+# url_check 插件：URL 可达性检查。
+# 尝试 fetch 并报告响应长度。
+name: url_check
+version: 1.0.0
+desc: 网址连通检查：抓取 URL 报告可达性
+url: plugins/url_check.yml
+
+tools:
+  - id: ping
+    desc: 检查一个网址是否可达
+    params:
+      - id: url
+        name: URL
+        type: string
+        required: true
+        desc: 要检查的网址
+    script: |
+      body = fetch(arg("url"), 15)
+      head = substr(body, 0, 6)
+      if body == "" || head == "(fetch"
+        ret("不可达：" + substr(body, 0, 30))
+      else
+        ret("可达，响应长度 " + itoa(len(body)))
+      end

@@ -1,0 +1,34 @@
+# workout_log 插件：运动记录。
+# KV 累计运动时长与次数，可记录/查看/重置。
+name: workout_log
+version: 1.0.0
+desc: 运动记录：累计时长与次数
+url: plugins/workout_log.yml
+
+tools:
+  - id: log
+    desc: 记录一次运动
+    params:
+      - id: mins
+        name: 分钟数
+        type: string
+        required: true
+        desc: 本次运动时长
+    script: |
+      n = atoi(kv_get("wn")) + 1
+      kv_set("wn", itoa(n))
+      m = atoi(kv_get("wm")) + atoi(arg("mins"))
+      kv_set("wm", itoa(m))
+      ret("已运动 " + itoa(n) + " 次，共 " + itoa(m) + " 分钟")
+
+  - id: show
+    desc: 查看运动统计
+    script: |
+      ret("运动 " + itoa(atoi(kv_get("wn"))) + " 次，共 " + kv_get("wm") + " 分钟")
+
+  - id: reset
+    desc: 重置运动记录
+    script: |
+      kv_set("wn", "0")
+      kv_set("wm", "0")
+      ret("运动记录已重置")

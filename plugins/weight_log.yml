@@ -1,0 +1,37 @@
+# weight_log 插件：体重记录。
+# KV 记录每次体重，可记录/查看最新/历史条数。
+name: weight_log
+version: 1.0.0
+desc: 体重记录：记录并查看体重变化
+url: plugins/weight_log.yml
+
+tools:
+  - id: log
+    desc: 记录一次体重
+    params:
+      - id: kg
+        name: 体重(kg)
+        type: string
+        required: true
+        desc: 本次体重
+    script: |
+      n = atoi(kv_get("n"))
+      kv_set("w" + itoa(n), arg("kg"))
+      n = n + 1
+      kv_set("n", itoa(n))
+      ret("已记录体重 " + arg("kg") + "kg（第 " + itoa(n) + " 次）")
+
+  - id: latest
+    desc: 查看最近一次体重
+    script: |
+      n = atoi(kv_get("n"))
+      if n == 0
+        ret("还没有记录")
+      end
+      ret("最近体重 " + kv_get("w" + itoa(n - 1)) + "kg，共记录 " + itoa(n) + " 次")
+
+  - id: clear
+    desc: 清空体重记录
+    script: |
+      kv_set("n", "0")
+      ret("体重记录已清空")

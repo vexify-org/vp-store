@@ -1,0 +1,53 @@
+# budget 插件：预算管理。
+# KV 维护预算额与已用额，判断是否超支。
+name: budget
+version: 1.0.0
+desc: 预算管理：设定预算，记录花费，检查剩余
+url: plugins/budget.yml
+
+tools:
+  - id: set
+    desc: 设置预算总额
+    params:
+      - id: total
+        name: 预算额
+        type: string
+        required: true
+        desc: 总预算
+    script: |
+      kv_set("budget", arg("total"))
+      ret("预算设为 " + arg("total") + " 元")
+
+  - id: spend
+    desc: 记录一笔花费
+    params:
+      - id: amt
+        name: 花费
+        type: string
+        required: true
+        desc: 花销金额
+    script: |
+      used = atoi(kv_get("used")) + atoi(arg("amt"))
+      kv_set("used", itoa(used))
+      ret("已花费 " + itoa(used) + " 元")
+
+  - id: check
+    desc: 检查预算剩余
+    script: |
+      t = atoi(kv_get("budget"))
+      u = atoi(kv_get("used"))
+      left = t - u
+      if t <= 0
+        ret("未设置预算，请先 set")
+      end
+      if left < 0
+        ret("已超支 " + itoa(0 - left) + " 元！")
+      else
+        ret("剩余预算 " + itoa(left) + " 元（共 " + itoa(t) + " 元）")
+      end
+
+  - id: reset
+    desc: 重置花费，保留预算
+    script: |
+      kv_set("used", "0")
+      ret("花费已重置")

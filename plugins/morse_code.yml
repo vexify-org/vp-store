@@ -1,0 +1,109 @@
+# morse_code 插件：简单位元莫斯码编码。
+# 把 a-z 小写字母映射为点划（. / -）。
+name: morse_code
+version: 1.0.0
+desc: 莫斯码编码：字母转点划编码
+url: plugins/morse_code.yml
+
+tools:
+  - id: encode
+    desc: 编码一段小写字母文本
+    params:
+      - id: text
+        name: 文本
+        type: string
+        required: true
+        desc: 小写英文字母，空格分隔单词
+    script: |
+      t = arg("text")
+      # 用查表式逐个字母翻译：a=.- b=-... 等抽样映射
+      out = ""
+      i = 0
+      while i < len(t)
+        c = substr(t, i, 1)
+        code = ""
+        if c == "a"
+          code = ".-"
+        end
+        if c == "b"
+          code = "-..."
+        end
+        if c == "c"
+          code = "-.-."
+        end
+        if c == "d"
+          code = "-.."
+        end
+        if c == "e"
+          code = "."
+        end
+        if c == "f"
+          code = "..-."
+        end
+        if c == "g"
+          code = "--."
+        end
+        if c == "h"
+          code = "...."
+        end
+        if c == "i"
+          code = ".."
+        end
+        if c == "j"
+          code = ".---"
+        end
+        if c == "k"
+          code = "-.-"
+        end
+        if c == "l"
+          code = ".-.."
+        end
+        if c == "m"
+          code = "--"
+        end
+        if c == "n"
+          code = "-."
+        end
+        if c == "o"
+          code = "---"
+        end
+        if c == "p"
+          code = ".--."
+        end
+        if c == "q"
+          code = "--.-"
+        end
+        if c == "r"
+          code = ".-."
+        end
+        if c == "s"
+          code = "..."
+        end
+        if c == "t"
+          code = "-"
+        end
+        if c == "u"
+          code = "..-"
+        end
+        if c == "v"
+          code = "...-"
+        end
+        if c == "w"
+          code = ".--"
+        end
+        if c == "x"
+          code = "-..-"
+        end
+        if c == "y"
+          code = "-.--"
+        end
+        if c == "z"
+          code = "--.."
+        end
+        if code == ""
+          code = c
+        end
+        out = out + code + " "
+        i = i + 1
+      end
+      ret(substr(out, 0, 400))

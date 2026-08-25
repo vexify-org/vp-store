@@ -1,0 +1,24 @@
+# 区间求和: 1..n 累加
+name: int_sum
+version: 1.0.0
+desc: 区间求和: 累加 1..n
+url: plugins/int_sum.yml
+
+tools:
+  - id: do
+    desc: 求 1..n 的累加和
+    params:
+      - id: n
+        name: 上限
+        type: int
+        required: true
+        desc: 整数
+    script: |
+      n = atoi(arg("n"))
+      s = 0
+      c = 1
+      while c <= n
+        s = s + c
+        c = c + 1
+      end
+      ret("1.." + itoa(n) + "=" + itoa(s))

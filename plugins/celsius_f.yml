@@ -1,0 +1,30 @@
+# 温度换算: 摄氏→华氏 F=C*9/5+32
+name: celsius_f
+version: 1.0.0
+desc: 温度换算: 摄氏→华氏
+url: plugins/celsius_f.yml
+
+tools:
+  - id: do
+    desc: C→F(整数运算)
+    params:
+      - id: c
+        name: 摄氏
+        type: int
+        required: true
+        desc: 摄氏度
+    script: |
+      c = atoi(arg("c"))
+      x = c
+      r = 0
+      k = 0
+      while k < 9
+        r = r + x
+        k = k + 1
+      end
+      q = 0
+      while r >= 5
+        r = r - 5
+        q = q + 1
+      end
+      ret("≈ " + itoa(q + 32) + " °F")

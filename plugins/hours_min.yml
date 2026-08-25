@@ -1,0 +1,24 @@
+# 时间换算: 小时→分钟(×60)
+name: hours_min
+version: 1.0.0
+desc: 时间换算: 小时→分钟
+url: plugins/hours_min.yml
+
+tools:
+  - id: do
+    desc: hour×60→min
+    params:
+      - id: value
+        name: 小时
+        type: int
+        required: true
+        desc: 时
+    script: |
+      v = atoi(arg("value"))
+      r = 0
+      k = 0
+      while k < 60
+        r = r + v
+        k = k + 1
+      end
+      ret(itoa(r) + " 分钟")

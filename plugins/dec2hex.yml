@@ -1,0 +1,39 @@
+# 十进制转十六进制: 取余16映射0-9a-f
+name: dec2hex
+version: 1.0.0
+desc: 十进制转十六进制: 取余16映射表
+url: plugins/dec2hex.yml
+
+tools:
+  - id: do
+    desc: 十进制转十六进制
+    params:
+      - id: n
+        name: 十进制
+        type: int
+        required: true
+        desc: 非负整数
+    script: |
+      n = atoi(arg("n"))
+      tbl = "0123456789abcdef"
+      if n == 0
+        ret("0")
+      end
+      dg = ""
+      while n > 0
+        r = n
+        q = 0
+        while r >= 16
+          r = r - 16
+          q = q + 1
+        end
+        dg = dg + substr(tbl, r, 1)
+        n = q
+      end
+      o = ""
+      i = len(dg)
+      while i > 0
+        i = i - 1
+        o = o + substr(dg, i, 1)
+      end
+      ret(o)

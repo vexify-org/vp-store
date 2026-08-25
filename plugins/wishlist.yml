@@ -1,0 +1,40 @@
+# 心愿单: 愿望 增/列/清
+name: wishlist
+version: 1.0.0
+desc: 心愿单: 愿望清单 增/列/清
+url: plugins/wishlist.yml
+
+tools:
+  - id: add
+    desc: 添加愿望
+    params:
+      - id: item
+        name: 愿望
+        type: string
+        required: true
+        desc: 内容
+    script: |
+      n = atoi(kv_get("n"))
+      kv_set("w" + itoa(n), arg("item"))
+      n = n + 1
+      kv_set("n", itoa(n))
+      ret("已记录愿望, 共 " + itoa(n) + " 个")
+  - id: list
+    desc: 列出愿望
+    script: |
+      n = atoi(kv_get("n"))
+      if n == 0
+        ret("心愿单为空")
+      end
+      o = "心愿:"
+      i = 0
+      while i < n
+        o = o + " | " + itoa(i) + "." + kv_get("w" + itoa(i))
+        i = i + 1
+      end
+      ret(o)
+  - id: clear
+    desc: 清空
+    script: |
+      kv_set("n", "0")
+      ret("心愿单已清空")

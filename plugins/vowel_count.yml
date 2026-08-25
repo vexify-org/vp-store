@@ -1,0 +1,32 @@
+# 元音统计: 统计 a/e/i/o/u 出现次数
+name: vowel_count
+version: 1.0.0
+desc: 元音统计: 统计 aeiou 出现次数
+url: plugins/vowel_count.yml
+
+tools:
+  - id: do
+    desc: 统计元音字母数量
+    params:
+      - id: s
+        name: 文本
+        type: string
+        required: true
+        desc: 内容
+    script: |
+      s = arg("s")
+      vs = "aeiouAEIOU"
+      cnt = 0
+      i = 0
+      while i < len(s)
+        ch = substr(s, i, 1)
+        j = 0
+        while j < len(vs)
+          if substr(vs, j, 1) == ch
+            cnt = cnt + 1
+          end
+          j = j + 1
+        end
+        i = i + 1
+      end
+      ret("元音数=" + itoa(cnt))

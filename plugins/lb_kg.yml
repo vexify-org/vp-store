@@ -1,0 +1,24 @@
+# 质量换算: 磅→千克(÷2.2 整数近似)
+name: lb_kg
+version: 1.0.0
+desc: 质量换算: 磅→千克
+url: plugins/lb_kg.yml
+
+tools:
+  - id: do
+    desc: lb ÷2.2 ≈ kg(整数近似)
+    params:
+      - id: value
+        name: 磅
+        type: int
+        required: true
+        desc: lb
+    script: |
+      v = atoi(arg("value"))
+      v = v + v
+      q = 0
+      while v >= 22
+        v = v - 22
+        q = q + 1
+      end
+      ret("≈ " + itoa(q) + " kg")

@@ -1,0 +1,55 @@
+# expiry 插件：临期提醒。
+# KV 记录物品与有效天数，任务定时递减并提醒临期。
+name: expiry
+version: 1.0.0
+desc: 临期提醒：记录物品剩余有效天数
+url: plugins/expiry.yml
+
+tools:
+  - id: set
+    desc: 记录物品与剩余天数
+    params:
+      - id: item
+        name: 物品
+        type: string
+        required: true
+        desc: 物品名
+      - id: days
+        name: 剩余天数
+        type: string
+        required: true
+        desc: 有效期天数
+    script: |
+      kv_set("ex:" + arg("item"), arg("days"))
+      ret("[" + arg("item") + "] 剩余 " + arg("days") + " 天")
+
+  - id: check
+    desc: 查看物品剩余天数
+    params:
+      - id: item
+        name: 物品
+        type: string
+        required: true
+        desc: 物品名
+    script: |
+      d = atoi(kv_get("ex:" + arg("item")))
+      if d <= 0
+        ret("[" + arg("item") + "] 已过期或未记录")
+      end
+      if d <= 3
+        ret("[" + arg("item") + "] 临期！仅剩 " + itoa(d) + " 天")
+      else
+        ret("[" + arg("item") + "] 剩余 " + itoa(d) + " 天")
+      end
+
+  - id: remove
+    desc: 移除一个物品
+    params:
+      - id: item
+        name: 物品
+        type: string
+        required: true
+        desc: 物品名
+    script: |
+      kv_set("ex:" + arg("item"), "0")
+      ret("[" + arg("item") + "] 已移除")

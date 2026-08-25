@@ -1,0 +1,17 @@
+# 温度换算: 摄氏→开尔文
+name: celsius_k
+version: 1.0.0
+desc: 温度换算: 摄氏→开尔文
+url: plugins/celsius_k.yml
+
+tools:
+  - id: do
+    desc: C→K(+273.15 取整)
+    params:
+      - id: c
+        name: 摄氏
+        type: int
+        required: true
+        desc: 摄氏度
+    script: |
+      ret(itoa(atoi(arg("c")) + 273) + " K")

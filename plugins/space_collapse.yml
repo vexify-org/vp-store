@@ -1,0 +1,33 @@
+# 空白收敛: 把连续多个空格压成一个空格
+name: space_collapse
+version: 1.0.0
+desc: 空白收敛: 把连续空白压成一个空格
+url: plugins/space_collapse.yml
+
+tools:
+  - id: do
+    desc: 合并连续空格
+    params:
+      - id: s
+        name: 文本
+        type: string
+        required: true
+        desc: 含多余空格的文本
+    script: |
+      s = arg("s")
+      o = ""
+      prev = 0
+      i = 0
+      while i < len(s)
+        if substr(s, i, 1) == " "
+          if prev == 0
+            o = o + " "
+            prev = 1
+          end
+        else
+          o = o + substr(s, i, 1)
+          prev = 0
+        end
+        i = i + 1
+      end
+      ret(o)

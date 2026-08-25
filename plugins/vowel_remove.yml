@@ -1,0 +1,28 @@
+# vowel_remove 插件：去元音。
+# 移除文本中的 aeiou（忽略大小写）。
+name: vowel_remove
+version: 1.0.0
+desc: 去元音：删除全部 aeiou 字母
+url: plugins/vowel_remove.yml
+
+tools:
+  - id: remove
+    desc: 去掉元音
+    params:
+      - id: text
+        name: 文本
+        type: string
+        required: true
+        desc: 原文本
+    script: |
+      t = arg("text")
+      out = ""
+      i = 0
+      while i < len(t)
+        c = substr(t, i, 1)
+        if c != "a" && c != "e" && c != "i" && c != "o" && c != "u" && c != "A" && c != "E" && c != "I" && c != "O" && c != "U"
+          out = out + c
+        end
+        i = i + 1
+      end
+      ret(out)

@@ -1,0 +1,39 @@
+# parking 插件：停车费估算。
+# 按小时累计停车时间，估算费用（每小时 5 元，用循环累加计算）。
+name: parking
+version: 1.0.0
+desc: 停车费计算：累计停车小时并估算费用
+url: plugins/parking.yml
+
+tools:
+  - id: in
+    desc: 记录入场
+    script: |
+      kv_set("hrs", "0")
+      ret("车辆入场，计时开始")
+
+  - id: hour
+    desc: 增加 1 小时停车
+    script: |
+      h = atoi(kv_get("hrs")) + 1
+      kv_set("hrs", itoa(h))
+      fee = 0
+      i = 0
+      while i < h
+        fee = fee + 5
+        i = i + 1
+      end
+      ret("已停 " + itoa(h) + " 小时，预估费用 " + itoa(fee) + " 元")
+
+  - id: bill
+    desc: 离场结算
+    script: |
+      h = atoi(kv_get("hrs"))
+      fee = 0
+      i = 0
+      while i < h
+        fee = fee + 5
+        i = i + 1
+      end
+      kv_set("hrs", "0")
+      ret("停车 " + itoa(h) + " 小时，应收 " + itoa(fee) + " 元")

@@ -1,0 +1,35 @@
+# html_strip 插件：HTML 标签剥离。
+# 扫描输入，跳过 <...> 标签，只保留文本。
+name: html_strip
+version: 1.0.0
+desc: HTML 标签剥离：去除标签只留文本
+url: plugins/html_strip.yml
+
+tools:
+  - id: strip
+    desc: 去掉输入中的 HTML 标签
+    params:
+      - id: html
+        name: HTML
+        type: string
+        required: true
+        desc: 含标签的文本
+    script: |
+      html = arg("html")
+      out = ""
+      i = 0
+      inTag = 0
+      while i < len(html)
+        c = substr(html, i, 1)
+        if c == "<"
+          inTag = 1
+        end
+        if c == ">"
+          inTag = 0
+        end
+        if inTag == 0 && c != ">"
+          out = out + c
+        end
+        i = i + 1
+      end
+      ret(out)

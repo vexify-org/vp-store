@@ -36,6 +36,400 @@ plugins:
     desc: 网页关键词计数：抓取 URL，统计关键词出现次数
     file: plugins/findtext.yml
 
+  # ============ 批量手写插件（文本/字符串）============
+  - id: text_upper
+    name: text_upper
+    desc: 文本转大写
+    file: plugins/text_upper.yml
+  - id: text_lower
+    name: text_lower
+    desc: 文本转小写
+    file: plugins/text_lower.yml
+  - id: text_reverse
+    name: text_reverse
+    desc: 文本反转
+    file: plugins/text_reverse.yml
+  - id: text_analyzer
+    name: text_analyzer
+    desc: 文本统计：长度/字数/字符数
+    file: plugins/text_analyzer.yml
+  - id: word_count
+    name: word_count
+    desc: 单词计数：统计空格分隔的词数
+    file: plugins/word_count.yml
+  - id: char_freq
+    name: char_freq
+    desc: 字符频率：统计每个字符出现次数
+    file: plugins/char_freq.yml
+  - id: substr_tool
+    name: substr_tool
+    desc: 字符串截取：按起止位置截取子串
+    file: plugins/substr_tool.yml
+  - id: index_of
+    name: index_of
+    desc: 子串定位：查找子串出现位置
+    file: plugins/index_of.yml
+  - id: pad_left
+    name: pad_left
+    desc: 左侧填充：在左侧补字符对齐
+    file: plugins/pad_left.yml
+  - id: pad_right
+    name: pad_right
+    desc: 右侧填充：在右侧补字符对齐
+    file: plugins/pad_right.yml
+  - id: last_word
+    name: last_word
+    desc: 取最后一个单词
+    file: plugins/last_word.yml
+  - id: space_collapse
+    name: space_collapse
+    desc: 空格合并：连续空白折叠为一个
+    file: plugins/space_collapse.yml
+  - id: line_count
+    name: line_count
+    desc: 行数统计：统计文本行数
+    file: plugins/line_count.yml
+  - id: vowel_count
+    name: vowel_count
+    desc: 元音计数：统计 aeiou 数量
+    file: plugins/vowel_count.yml
+  - id: first_word
+    name: first_word
+    desc: 取第一个单词
+    file: plugins/first_word.yml
+  - id: vowel_remove
+    name: vowel_remove
+    desc: 去元音：删除全部 aeiou 字母
+    file: plugins/vowel_remove.yml
+  - id: word_slice
+    name: word_slice
+    desc: 取词器：返回文本中第 K 个单词
+    file: plugins/word_slice.yml
+  - id: initials
+    name: initials
+    desc: 首字母提取：取每个词的首字符拼接
+    file: plugins/initials.yml
+  - id: punctuation_count
+    name: punctuation_count
+    desc: 标点统计：统计句子中标点数量
+    file: plugins/punctuation_count.yml
+  - id: leetspeak
+    name: leetspeak
+    desc: 风格替换：把文本中字母替换为花招字符
+    file: plugins/leetspeak.yml
+  - id: repeat_char
+    name: repeat_char
+    desc: 字符重复：把某字符/串重复 N 次拼接
+    file: plugins/repeat_char.yml
+  - id: extract_digits
+    name: extract_digits
+    desc: 提取数字：从文本抽出全部数字并合并
+    file: plugins/extract_digits.yml
+  - id: html_strip
+    name: html_strip
+    desc: HTML 标签剥离：去除标签只留文本
+    file: plugins/html_strip.yml
+  - id: morse_code
+    name: morse_code
+    desc: 莫斯码编码：字母转点划编码
+    file: plugins/morse_code.yml
+  # ============ 进制/数论 ============
+  - id: dec2bin
+    name: dec2bin
+    desc: 十进制转二进制
+    file: plugins/dec2bin.yml
+  - id: bin2dec
+    name: bin2dec
+    desc: 二进制转十进制
+    file: plugins/bin2dec.yml
+  - id: dec2hex
+    name: dec2hex
+    desc: 十进制转十六进制
+    file: plugins/dec2hex.yml
+  - id: hex2dec
+    name: hex2dec
+    desc: 十六进制转十进制
+    file: plugins/hex2dec.yml
+  - id: digit_sum
+    name: digit_sum
+    desc: 数位求和：把各位数字相加
+    file: plugins/digit_sum.yml
+  - id: fib_n
+    name: fib_n
+    desc: 斐波那契：生成第 N 项
+    file: plugins/fib_n.yml
+  - id: fib_check
+    name: fib_check
+    desc: 斐波那契判断：检查数字是否属于斐波那契数列
+    file: plugins/fib_check.yml
+  - id: is_palindrome
+    name: is_palindrome
+    desc: 数字回文判断
+    file: plugins/is_palindrome.yml
+  - id: reverse_number
+    name: reverse_number
+    desc: 数字反转
+    file: plugins/reverse_number.yml
+  - id: power_calc
+    name: power_calc
+    desc: 幂运算：循环累乘计算 a^b
+    file: plugins/power_calc.yml
+  - id: factorial
+    name: factorial
+    desc: 阶乘：用循环累乘计算 N!
+    file: plugins/factorial.yml
+  - id: gcd
+    name: gcd
+    desc: 最大公约数：辗转相减求 gcd
+    file: plugins/gcd.yml
+  - id: lcm
+    name: lcm
+    desc: 最小公倍数：通过 gcd 求 lcm
+    file: plugins/lcm.yml
+  - id: is_prime
+    name: is_prime
+    desc: 素数判断
+    file: plugins/is_prime.yml
+  - id: is_even
+    name: is_even
+    desc: 奇偶判断
+    file: plugins/is_even.yml
+  - id: abs_val
+    name: abs_val
+    desc: 绝对值
+    file: plugins/abs_val.yml
+  - id: int_max
+    name: int_max
+    desc: 多个整数取最大值
+    file: plugins/int_max.yml
+  - id: int_min
+    name: int_min
+    desc: 多个整数取最小值
+    file: plugins/int_min.yml
+  - id: int_avg
+    name: int_avg
+    desc: 整数平均值
+    file: plugins/int_avg.yml
+  - id: int_sum
+    name: int_sum
+    desc: 整数求和
+    file: plugins/int_sum.yml
+  - id: int_div
+    name: int_div
+    desc: 整除与余数：返回商和余数
+    file: plugins/int_div.yml
+  # ============ 单位/时间换算 ============
+  - id: kg_lb
+    name: kg_lb
+    desc: 千克转磅
+    file: plugins/kg_lb.yml
+  - id: lb_kg
+    name: lb_kg
+    desc: 磅转千克
+    file: plugins/lb_kg.yml
+  - id: celsius_f
+    name: celsius_f
+    desc: 摄氏转华氏
+    file: plugins/celsius_f.yml
+  - id: celsius_k
+    name: celsius_k
+    desc: 摄氏转开尔文
+    file: plugins/celsius_k.yml
+  - id: km_miles
+    name: km_miles
+    desc: 千米转英里
+    file: plugins/km_miles.yml
+  - id: miles_km
+    name: miles_km
+    desc: 英里转千米
+    file: plugins/miles_km.yml
+  - id: bytes_kb
+    name: bytes_kb
+    desc: 字节转千字节
+    file: plugins/bytes_kb.yml
+  - id: kb_mb
+    name: kb_mb
+    desc: 千字节转兆字节
+    file: plugins/kb_mb.yml
+  - id: mb_gb
+    name: mb_gb
+    desc: 兆字节转吉字节
+    file: plugins/mb_gb.yml
+  - id: days_hours
+    name: days_hours
+    desc: 天数转小时
+    file: plugins/days_hours.yml
+  - id: hours_min
+    name: hours_min
+    desc: 小时转分钟
+    file: plugins/hours_min.yml
+  - id: min_sec
+    name: min_sec
+    desc: 分钟转秒
+    file: plugins/min_sec.yml
+  - id: sec_hms
+    name: sec_hms
+    desc: 秒转时分秒
+    file: plugins/sec_hms.yml
+  - id: hms_sec
+    name: hms_sec
+    desc: 时分秒转秒
+    file: plugins/hms_sec.yml
+  # ============ KV 状态追踪器 ============
+  - id: note_kv
+    name: note_kv
+    desc: 便签：KV 读写一条便签
+    file: plugins/note_kv.yml
+  - id: notebook
+    name: notebook
+    desc: 笔记本：按页索引存储多段笔记
+    file: plugins/notebook.yml
+  - id: bookmark
+    name: bookmark
+    desc: 书签：收藏/列出/清空链接
+    file: plugins/bookmark.yml
+  - id: shopping_list
+    name: shopping_list
+    desc: 购物清单：添加/查看/清空
+    file: plugins/shopping_list.yml
+  - id: reading_list
+    name: reading_list
+    desc: 阅读清单：待读/在读管理
+    file: plugins/reading_list.yml
+  - id: wishlist
+    name: wishlist
+    desc: 心愿单：收藏想买/想做的事
+    file: plugins/wishlist.yml
+  - id: contact_book
+    name: contact_book
+    desc: 通讯录：记录联系人
+    file: plugins/contact_book.yml
+  - id: project_list
+    name: project_list
+    desc: 项目清单：记录项目要点
+    file: plugins/project_list.yml
+  - id: ledger
+    name: ledger
+    desc: 收支记账：记录收入/支出，累计合计
+    file: plugins/ledger.yml
+  - id: inventory
+    name: inventory
+    desc: 库存管理：按物品增减数量
+    file: plugins/inventory.yml
+  - id: expenses
+    name: expenses
+    desc: 支出流水：逐笔记账、汇总、查看
+    file: plugins/expenses.yml
+  - id: parking
+    name: parking
+    desc: 停车费计算：累计停车小时并估算费用
+    file: plugins/parking.yml
+  - id: habit
+    name: habit
+    desc: 习惯打卡：累计每日打卡次数
+    file: plugins/habit.yml
+  - id: mood
+    name: mood
+    desc: 心情日志：按记录心情，支持查看
+    file: plugins/mood.yml
+  - id: reading_progress
+    name: reading_progress
+    desc: 阅读进度：记录当前页/总页数
+    file: plugins/reading_progress.yml
+  - id: water_log
+    name: water_log
+    desc: 饮水打卡：累计当日饮水量（毫升）
+    file: plugins/water_log.yml
+  - id: sleep_log
+    name: sleep_log
+    desc: 睡眠记录：累计睡眠小时数
+    file: plugins/sleep_log.yml
+  - id: workout_log
+    name: workout_log
+    desc: 运动记录：累计时长与次数
+    file: plugins/workout_log.yml
+  - id: goal_list
+    name: goal_list
+    desc: 目标清单：管理长期目标
+    file: plugins/goal_list.yml
+  - id: scrum
+    name: scrum
+    desc: 任务看板：待办/进行中/已完成
+    file: plugins/scrum.yml
+  - id: weight_log
+    name: weight_log
+    desc: 体重记录：记录并查看体重变化
+    file: plugins/weight_log.yml
+  - id: budget
+    name: budget
+    desc: 预算管理：设定预算，记录花费，检查剩余
+    file: plugins/budget.yml
+  - id: expiry
+    name: expiry
+    desc: 临期提醒：记录物品剩余有效天数
+    file: plugins/expiry.yml
+  - id: savings
+    name: savings
+    desc: 储蓄目标：累积存款，对比目标
+    file: plugins/savings.yml
+  # ============ Web 探测/随机/游戏/工具 ============
+  - id: url_check
+    name: url_check
+    desc: 网址连通检查：抓取 URL 报告可达性
+    file: plugins/url_check.yml
+  - id: domain_parse
+    name: domain_parse
+    desc: URL 拆解：提取协议与主机名
+    file: plugins/domain_parse.yml
+  - id: dice
+    name: dice
+    desc: 掷骰子：按种子生成 1..sides 的随机结果
+    file: plugins/dice.yml
+  - id: coinflip
+    name: coinflip
+    desc: 抛硬币：按种子输出正/反面
+    file: plugins/coinflip.yml
+  - id: random_range
+    name: random_range
+    desc: 伪随机数：在 [min, max] 内按种子取值
+    file: plugins/random_range.yml
+  - id: passphrase
+    name: passphrase
+    desc: 随机口令：按种子生成指定长度字符串
+    file: plugins/passphrase.yml
+  - id: countdown
+    name: countdown
+    desc: 倒计时：设定计时秒数，定时递减提醒
+    file: plugins/countdown.yml
+  - id: rps
+    name: rps
+    desc: 石头剪刀布：与程序对战一局
+    file: plugins/rps.yml
+  - id: guess_number
+    name: guess_number
+    desc: 猜数字：猜一个 1..100 的数字
+    file: plugins/guess_number.yml
+  - id: go_fish
+    name: go_fish
+    desc: 接龙记忆：记录单词序列并回顾
+    file: plugins/go_fish.yml
+  - id: email_check
+    name: email_check
+    desc: 邮箱校验：检查字符串基本邮箱格式
+    file: plugins/email_check.yml
+  - id: phone_check
+    name: phone_check
+    desc: 手机号校验：检查是否 11 位数字且以 1 开头
+    file: plugins/phone_check.yml
+  - id: guess_animal
+    name: guess_animal
+    desc: 动物速查：按名字返回预设简介
+    file: plugins/guess_animal.yml
+  - id: tip_calc
+    name: tip_calc
+    desc: 小费分摊：计算小费与人头均摊
+    file: plugins/tip_calc.yml
+
   # —— 以下为 docker 离线部署包（zip 相对路径自动套加速，解压进 docker 目录）——
   - id: docker-mysql
     name: MySQL 8（离线镜像）

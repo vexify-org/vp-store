@@ -1,0 +1,56 @@
+# expenses 插件：逐笔支出流水。
+# KV 按序号记录每笔支出，同时维护累计总额。
+name: expenses
+version: 1.0.0
+desc: 支出流水：逐笔记账、汇总、查看
+url: plugins/expenses.yml
+
+tools:
+  - id: add
+    desc: 记一笔支出
+    params:
+      - id: amt
+        name: 金额
+        type: string
+        required: true
+        desc: 支出金额
+      - id: why
+        name: 用途
+        type: string
+        required: false
+        desc: 说明
+    script: |
+      n = atoi(kv_get("n"))
+      kv_set("e" + itoa(n), arg("amt") + ":" + arg("why"))
+      n = n + 1
+      kv_set("n", itoa(n))
+      s = atoi(kv_get("sum")) + atoi(arg("amt"))
+      kv_set("sum", itoa(s))
+      ret("已记支出，共 " + itoa(n) + " 笔")
+
+  - id: list
+    desc: 列出全部支出
+    script: |
+      n = atoi(kv_get("n"))
+      if n == 0
+        ret("暂无支出记录")
+      end
+      out = "支出流水:"
+      i = 0
+      while i < n
+        out = out + " |" + itoa(i) + "." + kv_get("e" + itoa(i))
+        i = i + 1
+      end
+      ret(out)
+
+  - id: total
+    desc: 支出合计
+    script: |
+      ret("共 " + itoa(atoi(kv_get("n"))) + " 笔，合计 " + kv_get("sum") + " 元")
+
+  - id: clear
+    desc: 清空流水
+    script: |
+      kv_set("n", "0")
+      kv_set("sum", "0")
+      ret("流水已清空")

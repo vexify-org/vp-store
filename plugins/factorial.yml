@@ -1,0 +1,33 @@
+# 阶乘: 循环加法连乘求 n!
+name: factorial
+version: 1.0.0
+desc: 阶乘: 循环求 n!
+url: plugins/factorial.yml
+
+tools:
+  - id: do
+    desc: 求 n!(循环加法)
+    params:
+      - id: n
+        name: 整数
+        type: int
+        required: true
+        desc: 非负整数
+    script: |
+      n = atoi(arg("n"))
+      if n < 0
+        ret("需非负整数")
+      end
+      f = 1
+      c = 2
+      while c <= n
+        acc = 0
+        k = 0
+        while k < c
+          acc = acc + f
+          k = k + 1
+        end
+        f = acc
+        c = c + 1
+      end
+      ret(itoa(n) + "!=" + itoa(f))

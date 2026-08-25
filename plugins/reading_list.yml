@@ -1,0 +1,40 @@
+# 阅读清单: 想读/在读 增列清
+name: reading_list
+version: 1.0.0
+desc: 阅读清单: 书单 增/列/清
+url: plugins/reading_list.yml
+
+tools:
+  - id: add
+    desc: 添加书目
+    params:
+      - id: book
+        name: 书名
+        type: string
+        required: true
+        desc: 书名或链接
+    script: |
+      n = atoi(kv_get("n"))
+      kv_set("rd" + itoa(n), arg("book"))
+      n = n + 1
+      kv_set("n", itoa(n))
+      ret("已加入书单, 共 " + itoa(n) + " 本")
+  - id: list
+    desc: 列出书单
+    script: |
+      n = atoi(kv_get("n"))
+      if n == 0
+        ret("书单为空")
+      end
+      o = "想读:"
+      i = 0
+      while i < n
+        o = o + " | " + itoa(i) + "." + kv_get("rd" + itoa(i))
+        i = i + 1
+      end
+      ret(o)
+  - id: clear
+    desc: 清空
+    script: |
+      kv_set("n", "0")
+      ret("书单已清空")

@@ -1,0 +1,28 @@
+# 首词提取: 取空格前的第一个单词
+name: first_word
+version: 1.0.0
+desc: 首词提取: 返回空格分隔的第一个单词
+url: plugins/first_word.yml
+
+tools:
+  - id: do
+    desc: 提取首词
+    params:
+      - id: s
+        name: 文本
+        type: string
+        required: true
+        desc: 一句话
+    script: |
+      s = arg("s")
+      w = ""
+      i = 0
+      while i < len(s)
+        if substr(s, i, 1) == " "
+          i = len(s)
+        else
+          w = w + substr(s, i, 1)
+          i = i + 1
+        end
+      end
+      ret(w)

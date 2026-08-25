@@ -1,0 +1,65 @@
+# inventory 插件：库存管理（带数量）。
+# KV 存储各物品数量，可入库/出库/查看/清空。
+name: inventory
+version: 1.0.0
+desc: 库存管理：按物品增减数量
+url: plugins/inventory.yml
+
+tools:
+  - id: add
+    desc: 物品入库
+    params:
+      - id: item
+        name: 物品
+        type: string
+        required: true
+        desc: 物品名
+      - id: qty
+        name: 数量
+        type: string
+        required: true
+        desc: 入库数量
+    script: |
+      k = "inv:" + arg("item")
+      cur = atoi(kv_get(k)) + atoi(arg("qty"))
+      kv_set(k, itoa(cur))
+      ret("[" + arg("item") + "] 库存 " + itoa(cur))
+
+  - id: take
+    desc: 物品出库
+    params:
+      - id: item
+        name: 物品
+        type: string
+        required: true
+        desc: 物品名
+      - id: qty
+        name: 数量
+        type: string
+        required: true
+        desc: 出库数量
+    script: |
+      k = "inv:" + arg("item")
+      cur = atoi(kv_get(k)) - atoi(arg("qty"))
+      if cur < 0
+        cur = 0
+      end
+      kv_set(k, itoa(cur))
+      ret("[" + arg("item") + "] 剩余 " + itoa(cur))
+
+  - id: check
+    desc: 查询物品库存
+    params:
+      - id: item
+        name: 物品
+        type: string
+        required: true
+        desc: 物品名
+    script: |
+      ret("[" + arg("item") + "] 库存 " + kv_get("inv:" + arg("item")))
+
+  - id: clear
+    desc: 清空库存
+    script: |
+      kv_set("inv:" + arg("item"), "0")
+      ret("库存已清零")

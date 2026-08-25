@@ -1,0 +1,31 @@
+# extract_digits 插件：提取字符串中所有数字。
+name: extract_digits
+version: 1.0.0
+desc: 提取数字：从文本抽出全部数字并合并
+url: plugins/extract_digits.yml
+
+tools:
+  - id: pull
+    desc: 从文本提出数字
+    params:
+      - id: text
+        name: 文本
+        type: string
+        required: true
+        desc: 含数字的文本
+    script: |
+      t = arg("text")
+      out = ""
+      i = 0
+      while i < len(t)
+        c = substr(t, i, 1)
+        if c == "0" || c == "1" || c == "2" || c == "3" || c == "4" || c == "5" || c == "6" || c == "7" || c == "8" || c == "9"
+          out = out + c
+        end
+        i = i + 1
+      end
+      if out == ""
+        ret("未发现数字")
+      else
+        ret("数字序列：" + out)
+      end

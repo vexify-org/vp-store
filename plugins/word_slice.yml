@@ -1,0 +1,57 @@
+# word_slice 插件：按空格取词。
+# 返回第 K 个单词（从 1 起）。
+name: word_slice
+version: 1.0.0
+desc: 取词器：返回文本中第 K 个单词
+url: plugins/word_slice.yml
+
+tools:
+  - id: get
+    desc: 取第 K 个词
+    params:
+      - id: text
+        name: 文本
+        type: string
+        required: true
+        desc: 空格分隔的文本
+      - id: k
+        name: 序号
+        type: string
+        required: true
+        desc: 从 1 开始
+    script: |
+      t = arg("text")
+      want = atoi(arg("k"))
+      if want <= 0
+        ret("序号需从1开始")
+      end
+      idx = 1
+      cur = ""
+      out = ""
+      found = 0
+      i = 0
+      while i <= len(t)
+        if i == len(t)
+          c = " "
+        else
+          c = substr(t, i, 1)
+        end
+        if c == " "
+          if cur != ""
+            if idx == want
+              out = cur
+              found = 1
+            end
+            idx = idx + 1
+            cur = ""
+          end
+        else
+          cur = cur + c
+        end
+        i = i + 1
+      end
+      if found == 1
+        ret("第" + itoa(want) + "个词：" + out)
+      else
+        ret("超出范围，共 " + itoa(idx - 1) + " 个词")
+      end

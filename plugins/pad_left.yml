@@ -1,0 +1,37 @@
+# 左补齐: 用指定字符向左填充到目标长度
+name: pad_left
+version: 1.0.0
+desc: 左补齐: 用字符向左填充到指定长度
+url: plugins/pad_left.yml
+
+tools:
+  - id: do
+    desc: 向左填充字符串
+    params:
+      - id: s
+        name: 文本
+        type: string
+        required: true
+        desc: 源串
+      - id: length
+        name: 目标长度
+        type: int
+        required: true
+        desc: 期望总长度
+      - id: ch
+        name: 填充字符
+        type: string
+        required: false
+        desc: 默认空格
+    script: |
+      s = arg("s")
+      v = atoi(arg("length"))
+      c = arg("ch")
+      if len(c) < 1
+        c = " "
+      end
+      pre = ""
+      while len(s) + len(pre) < v
+        pre = pre + c
+      end
+      ret(pre + s)

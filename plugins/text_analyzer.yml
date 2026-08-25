@@ -1,0 +1,39 @@
+# 文本分析与长度: 返回长度与首/尾预览
+name: text_analyzer
+version: 1.0.0
+desc: 文本分析与长度: 返回长度并预览首尾
+url: plugins/text_analyzer.yml
+
+tools:
+  - id: len
+    desc: 计算字符串长度并给出预览
+    params:
+      - id: s
+        name: 文本
+        type: string
+        required: true
+        desc: 任意内容
+    script: |
+      s = arg("s")
+      n = len(s)
+      head = substr(s, 0, 6)
+      ret("长度=" + itoa(n) + " 头部预览=[" + head + "]")
+  - id: compare
+    desc: 比较两段字符串是否相等
+    params:
+      - id: a
+        name: 文本A
+        type: string
+        required: true
+        desc: 第一段
+      - id: b
+        name: 文本B
+        type: string
+        required: true
+        desc: 第二段
+    script: |
+      if arg("a") == arg("b")
+        ret("相等")
+      else
+        ret("不相等")
+      end

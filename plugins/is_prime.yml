@@ -1,0 +1,39 @@
+# 素性判断: 试除判断素数
+name: is_prime
+version: 1.0.0
+desc: 素性判断: 试除判断素数
+url: plugins/is_prime.yml
+
+tools:
+  - id: do
+    desc: 判断 n 是否为素数
+    params:
+      - id: n
+        name: 整数
+        type: int
+        required: true
+        desc: 大于等于2
+    script: |
+      n = atoi(arg("n"))
+      if n < 2
+        ret("非素数(<2)")
+      end
+      ok = 1
+      d = 2
+      while d < n
+        r = n
+        while r >= d
+          r = r - d
+        end
+        if r == 0
+          ok = 0
+          d = n
+        else
+          d = d + 1
+        end
+      end
+      if ok == 1
+        ret(itoa(n) + " 是素数")
+      else
+        ret(itoa(n) + " 不是素数(可被" + itoa(d) + "整除)")
+      end

@@ -1,0 +1,36 @@
+# guess_animal 插件：动物百科小工具。
+# 按输入名返回预设的动物信息。
+name: guess_animal
+version: 1.0.0
+desc: 动物速查：按名字返回预设简介
+url: plugins/guess_animal.yml
+
+tools:
+  - id: info
+    desc: 查询动物简介
+    params:
+      - id: name
+        name: 动物名
+        type: string
+        required: true
+        desc: 中文或英文
+    script: |
+      n = arg("name")
+      desc = ""
+      if n == "猫" || n == "cat"
+        desc = "猫，肉食动物，独立而好奇。"
+      end
+      if n == "狗" || n == "dog"
+        desc = "狗，群居动物，忠诚且亲近人。"
+      end
+      if n == "大象" || n == "elephant"
+        desc = "大象，最大的陆生哺乳动物，记忆力强。"
+      end
+      if n == "海豚" || n == "dolphin"
+        desc = "海豚，聪明的水生哺乳动物，会用声呐。"
+      end
+      if desc == ""
+        ret("暂无 [" + n + "] 的资料，可试试 猫/狗/大象/海豚")
+      else
+        ret(n + "：" + desc)
+      end

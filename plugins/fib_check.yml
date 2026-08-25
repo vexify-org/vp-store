@@ -1,0 +1,40 @@
+# fib_check 插件：斐波那契判断。
+# 生成斐波那契数列判断某数是否为斐波那契数。
+name: fib_check
+version: 1.0.0
+desc: 斐波那契判断：检查数字是否属于斐波那契数列
+url: plugins/fib_check.yml
+
+tools:
+  - id: check
+    desc: 判断一个非负整数
+    params:
+      - id: n
+        name: 数字
+        type: string
+        required: true
+        desc: 待判断的数
+    script: |
+      n = atoi(arg("n"))
+      if n < 0
+        ret("请输入非负整数")
+      end
+      a = 0
+      b = 1
+      found = 0
+      if n == 0 || n == 1
+        found = 1
+      end
+      while b < n
+        c = a + b
+        a = b
+        b = c
+        if b == n
+          found = 1
+        end
+      end
+      if found == 1
+        ret(itoa(n) + " 是斐波那契数")
+      else
+        ret(itoa(n) + " 不是斐波那契数")
+      end

@@ -1,0 +1,44 @@
+# dice 插件：掷骰子。
+# 基于输入种子做确定性的伪随机取余，返回 1..sides。
+name: dice
+version: 1.0.0
+desc: 掷骰子：按种子生成 1..sides 的随机结果
+url: plugins/dice.yml
+
+tools:
+  - id: roll
+    desc: 掷一次骰子
+    params:
+      - id: sides
+        name: 面数
+        type: string
+        required: true
+        desc: 骰子面数，如 6
+      - id: seed
+        name: 种子
+        type: string
+        required: false
+        desc: 随机种子（任意字符串）
+    script: |
+      sides = atoi(arg("sides"))
+      if sides <= 0
+        ret("面数需大于0")
+      end
+      cnt = atoi(kv_get("n"))
+      s = arg("seed")
+      if len(s) == 0
+        s = kv_get("seed")
+      end
+      if len(s) == 0
+        s = "dice"
+      end
+      kv_set("seed", s)
+      idx = cnt
+      while idx >= len(s)
+        idx = idx - len(s)
+      end
+      r = atoi(substr(s, idx, 1))
+      result = 1 + (r % sides)
+      cnt = cnt + 1
+      kv_set("n", itoa(cnt))
+      ret("掷骰子(1-" + itoa(sides) + ") 结果：" + itoa(result))

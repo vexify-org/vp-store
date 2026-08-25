@@ -1,0 +1,36 @@
+# 指数计算: 循环加法实现连乘求幂
+name: power_calc
+version: 1.0.0
+desc: 指数计算: 循环求 base^exp
+url: plugins/power_calc.yml
+
+tools:
+  - id: do
+    desc: 求幂(循环加法)
+    params:
+      - id: base
+        name: 底数
+        type: int
+        required: true
+        desc: 底
+      - id: exp
+        name: 指数
+        type: int
+        required: true
+        desc: 非负指数
+    script: |
+      base = atoi(arg("base"))
+      e = atoi(arg("exp"))
+      res = 1
+      c = 0
+      while c < e
+        acc = 0
+        k = 0
+        while k < base
+          acc = acc + res
+          k = k + 1
+        end
+        res = acc
+        c = c + 1
+      end
+      ret("结果=" + itoa(res))

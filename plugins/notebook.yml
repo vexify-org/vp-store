@@ -1,0 +1,53 @@
+# 多页笔记本: 按索引存储多段笔记
+name: notebook
+version: 1.0.0
+desc: 笔记本: 多页笔记 增/查/清
+url: plugins/notebook.yml
+
+tools:
+  - id: page
+    desc: 写第N页笔记
+    params:
+      - id: index
+        name: 页码
+        type: int
+        required: true
+        desc: 页号
+      - id: text
+        name: 内容
+        type: string
+        required: true
+        desc: 笔记
+    script: |
+      kv_set("pg" + arg("index"), arg("text"))
+      ret("已写第 " + arg("index") + " 页")
+  - id: read
+    desc: 读某页
+    params:
+      - id: index
+        name: 页码
+        type: int
+        required: true
+        desc: 页号
+    script: |
+      v = kv_get("pg" + arg("index"))
+      if v == ""
+        ret("第 " + arg("index") + " 页为空")
+      else
+        ret(v)
+      end
+  - id: clear
+    desc: 清空全部笔记
+    params:
+      - id: index
+        name: 上限页
+        type: int
+        required: true
+        desc: 清到第几页
+    script: |
+      i = 0
+      while i <= atoi(arg("index"))
+        kv_set("pg" + itoa(i), "")
+        i = i + 1
+      end
+      ret("已清空 0.." + arg("index") + " 页")

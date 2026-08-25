@@ -1,0 +1,26 @@
+# 取较小值
+name: int_min
+version: 1.0.0
+desc: 取较小值: 比较返回较小数
+url: plugins/int_min.yml
+
+tools:
+  - id: do
+    desc: 返回两整数中较小者
+    params:
+      - id: a
+        name: 数A
+        type: int
+        required: true
+        desc: 整数
+      - id: b
+        name: 数B
+        type: int
+        required: true
+        desc: 整数
+    script: |
+      if atoi(arg("a")) <= atoi(arg("b"))
+        ret(arg("a"))
+      else
+        ret(arg("b"))
+      end

@@ -1,0 +1,32 @@
+# repeat_char 插件：字符重复生成。
+name: repeat_char
+version: 1.0.0
+desc: 字符重复：把某字符/串重复 N 次拼接
+url: plugins/repeat_char.yml
+
+tools:
+  - id: repeat
+    desc: 重复拼接
+    params:
+      - id: ch
+        name: 内容
+        type: string
+        required: true
+        desc: 要重复的文本
+      - id: n
+        name: 次数
+        type: string
+        required: true
+        desc: 重复次数
+    script: |
+      n = atoi(arg("n"))
+      if n <= 0
+        ret("次数需大于0")
+      end
+      out = ""
+      i = 0
+      while i < n
+        out = out + arg("ch")
+        i = i + 1
+      end
+      ret(substr(out, 0, 500))

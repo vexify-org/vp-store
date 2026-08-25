@@ -1,0 +1,44 @@
+# habit 插件：习惯打卡。
+# KV 记录习惯累计打卡次数，可打卡/查看/清空。
+name: habit
+version: 1.0.0
+desc: 习惯打卡：累计每日打卡次数
+url: plugins/habit.yml
+
+tools:
+  - id: check
+    desc: 记录一次打卡
+    params:
+      - id: habit
+        name: 习惯名
+        type: string
+        required: true
+        desc: 如：晨跑、阅读
+    script: |
+      k = "hb:" + arg("habit")
+      cur = atoi(kv_get(k)) + 1
+      kv_set(k, itoa(cur))
+      ret("[" + arg("habit") + "] 已打卡 " + itoa(cur) + " 次")
+
+  - id: show
+    desc: 查看某个习惯的打卡次数
+    params:
+      - id: habit
+        name: 习惯名
+        type: string
+        required: true
+        desc: 习惯名
+    script: |
+      ret("[" + arg("habit") + "] 累计 " + kv_get("hb:" + arg("habit")) + " 次")
+
+  - id: clear
+    desc: 清零某个习惯
+    params:
+      - id: habit
+        name: 习惯名
+        type: string
+        required: true
+        desc: 习惯名
+    script: |
+      kv_set("hb:" + arg("habit"), "0")
+      ret("[" + arg("habit") + "] 已清零")

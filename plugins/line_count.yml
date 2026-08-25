@@ -1,0 +1,26 @@
+# 行数统计: 基于换行符统计行数
+name: line_count
+version: 1.0.0
+desc: 行数统计: 按换行符统计文本行数
+url: plugins/line_count.yml
+
+tools:
+  - id: do
+    desc: 统计换行行数
+    params:
+      - id: s
+        name: 文本
+        type: string
+        required: true
+        desc: 多行文本
+    script: |
+      s = arg("s")
+      cnt = 1
+      i = 0
+      while i < len(s)
+        if substr(s, i, 1) == "\n"
+          cnt = cnt + 1
+        end
+        i = i + 1
+      end
+      ret("约 " + itoa(cnt) + " 行")

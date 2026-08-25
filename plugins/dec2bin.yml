@@ -1,0 +1,38 @@
+# 十进制转二进制: 循环取余再反转
+name: dec2bin
+version: 1.0.0
+desc: 十进制转二进制: 循环取余再反转
+url: plugins/dec2bin.yml
+
+tools:
+  - id: do
+    desc: 十进制整数转二进制
+    params:
+      - id: n
+        name: 十进制
+        type: int
+        required: true
+        desc: 非负整数
+    script: |
+      n = atoi(arg("n"))
+      if n == 0
+        ret("0")
+      end
+      dg = ""
+      while n > 0
+        r = n
+        q = 0
+        while r >= 2
+          r = r - 2
+          q = q + 1
+        end
+        dg = dg + itoa(r)
+        n = q
+      end
+      o = ""
+      i = len(dg)
+      while i > 0
+        i = i - 1
+        o = o + substr(dg, i, 1)
+      end
+      ret(o)

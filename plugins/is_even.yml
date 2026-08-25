@@ -1,0 +1,28 @@
+# 奇偶判断: 除以2取余
+name: is_even
+version: 1.0.0
+desc: 奇偶判断: 除以2的余数判断
+url: plugins/is_even.yml
+
+tools:
+  - id: do
+    desc: 判断奇数还是偶数
+    params:
+      - id: n
+        name: 整数
+        type: int
+        required: true
+        desc: 任意整数
+    script: |
+      n = atoi(arg("n"))
+      if n < 0
+        n = 0 - n
+      end
+      while n >= 2
+        n = n - 2
+      end
+      if n == 0
+        ret("偶数")
+      else
+        ret("奇数")
+      end

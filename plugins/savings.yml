@@ -1,0 +1,47 @@
+# savings 插件：储蓄目标。
+# KV 累积存款并对比目标，计算达成率（用循环累加）。
+name: savings
+version: 1.0.0
+desc: 储蓄目标：累积存款，对比目标
+url: plugins/savings.yml
+
+tools:
+  - id: target
+    desc: 设置储蓄目标
+    params:
+      - id: amount
+        name: 目标额
+        type: string
+        required: true
+        desc: 存钱目标
+    script: |
+      kv_set("sg_target", arg("amount"))
+      ret("储蓄目标设为 " + arg("amount") + " 元")
+
+  - id: save
+    desc: 存入一笔钱
+    params:
+      - id: amount
+        name: 存款
+        type: string
+        required: true
+        desc: 本次存入
+    script: |
+      cur = atoi(kv_get("sg_cur")) + atoi(arg("amount"))
+      kv_set("sg_cur", itoa(cur))
+      ret("已存 " + itoa(cur) + " 元")
+
+  - id: status
+    desc: 查看达成进度
+    script: |
+      t = atoi(kv_get("sg_target"))
+      c = atoi(kv_get("sg_cur"))
+      if t <= 0
+        ret("未设置目标，请先 target")
+      end
+      if c >= t
+        ret("已达成！存了 " + itoa(c) + "/" + itoa(t) + " 元，目标达成")
+      else
+        left = t - c
+        ret("已存 " + itoa(c) + "/" + itoa(t) + " 元，还需 " + itoa(left) + " 元")
+      end

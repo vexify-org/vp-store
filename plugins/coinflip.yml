@@ -1,0 +1,33 @@
+# coinflip 插件：抛硬币。
+# 按种子奇偶输出正/反面。
+name: coinflip
+version: 1.0.0
+desc: 抛硬币：按种子输出正/反面
+url: plugins/coinflip.yml
+
+tools:
+  - id: flip
+    desc: 抛一次硬币
+    params:
+      - id: seed
+        name: 种子
+        type: string
+        required: false
+        desc: 随机种子
+    script: |
+      cnt = atoi(kv_get("n"))
+      s = arg("seed")
+      if len(s) == 0
+        s = "coin"
+      end
+      idx = cnt
+      while idx >= len(s)
+        idx = idx - len(s)
+      end
+      d = atoi(substr(s, idx, 1))
+      kv_set("n", itoa(cnt + 1))
+      if d % 2 == 0
+        ret("正面")
+      else
+        ret("反面")
+      end

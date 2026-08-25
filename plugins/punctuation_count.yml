@@ -1,0 +1,28 @@
+# punctuation_count 插件：标点计数。
+# 统计文本中的中英文标点符号个数。
+name: punctuation_count
+version: 1.0.0
+desc: 标点统计：统计句子中逗号句号等标点数量
+url: plugins/punctuation_count.yml
+
+tools:
+  - id: count
+    desc: 统计标点数量
+    params:
+      - id: text
+        name: 文本
+        type: string
+        required: true
+        desc: 待统计文本
+    script: |
+      t = arg("text")
+      n = 0
+      i = 0
+      while i < len(t)
+        c = substr(t, i, 1)
+        if c == "，" || c == "。" || c == "！" || c == "？" || c == "、" || c == "," || c == "." || c == "!" || c == "?"
+          n = n + 1
+        end
+        i = i + 1
+      end
+      ret("标点符号共 " + itoa(n) + " 个")

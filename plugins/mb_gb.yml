@@ -1,0 +1,23 @@
+# 存储换算: MB→GB(÷1024)
+name: mb_gb
+version: 1.0.0
+desc: 存储换算: MB→GB
+url: plugins/mb_gb.yml
+
+tools:
+  - id: do
+    desc: MB÷1024→GB(取整)
+    params:
+      - id: value
+        name: 兆字节
+        type: int
+        required: true
+        desc: MB
+    script: |
+      v = atoi(arg("value"))
+      q = 0
+      while v >= 1024
+        v = v - 1024
+        q = q + 1
+      end
+      ret("≈ " + itoa(q) + " GB (余 " + itoa(v) + " MB)")

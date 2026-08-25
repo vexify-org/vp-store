@@ -1,0 +1,31 @@
+# water_log 插件：饮水打卡。
+# KV 累计当日饮水量，可打卡/查看/重置。
+name: water_log
+version: 1.0.0
+desc: 饮水打卡：累计当日饮水量（毫升）
+url: plugins/water_log.yml
+
+tools:
+  - id: drink
+    desc: 记录一次饮水
+    params:
+      - id: ml
+        name: 毫升数
+        type: string
+        required: true
+        desc: 本次饮水量
+    script: |
+      cur = atoi(kv_get("water")) + atoi(arg("ml"))
+      kv_set("water", itoa(cur))
+      ret("今日已饮水 " + itoa(cur) + " 毫升")
+
+  - id: show
+    desc: 查看今日饮水量
+    script: |
+      ret("今日饮水 " + kv_get("water") + " 毫升，目标 2000")
+
+  - id: reset
+    desc: 每日重置饮水记录
+    script: |
+      kv_set("water", "0")
+      ret("今日饮水已重置")

@@ -1,0 +1,32 @@
+# 数字各位和: 逐位累加十进制数各位
+name: digit_sum
+version: 1.0.0
+desc: 数字各位和: 将整数各位相加
+url: plugins/digit_sum.yml
+
+tools:
+  - id: do
+    desc: 十进制整数各位数字之和
+    params:
+      - id: n
+        name: 整数
+        type: int
+        required: true
+        desc: 任意整数
+    script: |
+      n = atoi(arg("n"))
+      if n < 0
+        n = 0 - n
+      end
+      s = 0
+      while n > 0
+        d = n
+        q = 0
+        while d >= 10
+          d = d - 10
+          q = q + 1
+        end
+        s = s + d
+        n = q
+      end
+      ret("各位和=" + itoa(s))

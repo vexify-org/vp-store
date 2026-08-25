@@ -1,0 +1,49 @@
+# rps 插件：石头剪刀布。
+# 按种子与出拳比较，返回胜负。
+name: rps
+version: 1.0.0
+desc: 石头剪刀布：与程序对战一局
+url: plugins/rps.yml
+
+tools:
+  - id: play
+    desc: 出拳对战
+    params:
+      - id: move
+        name: 出拳
+        type: string
+        required: true
+        desc: 石头/剪刀/布
+      - id: seed
+        name: 种子
+        type: string
+        required: false
+        desc: 随机种子
+    script: |
+      m = arg("move")
+      if m != "石头" && m != "剪刀" && m != "布"
+        ret("请输入 石头/剪刀/布")
+      end
+      s = arg("seed")
+      if len(s) == 0
+        s = "rps"
+      end
+      d = atoi(substr(s, 0, 1))
+      r = d % 3
+      if r == 0
+        cpu = "石头"
+      end
+      if r == 1
+        cpu = "剪刀"
+      end
+      if r == 2
+        cpu = "布"
+      end
+      if m == cpu
+        ret("对手出" + cpu + "，平局")
+      end
+      if (m == "石头" && cpu == "剪刀") || (m == "剪刀" && cpu == "布") || (m == "布" && cpu == "石头")
+        ret("对手出" + cpu + "，你赢")
+      else
+        ret("对手出" + cpu + "，你输")
+      end

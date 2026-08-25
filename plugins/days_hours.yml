@@ -1,0 +1,24 @@
+# 时间换算: 天数→小时(×24)
+name: days_hours
+version: 1.0.0
+desc: 时间换算: 天数→小时
+url: plugins/days_hours.yml
+
+tools:
+  - id: do
+    desc: day×24→hour
+    params:
+      - id: value
+        name: 天数
+        type: int
+        required: true
+        desc: 天
+    script: |
+      v = atoi(arg("value"))
+      r = 0
+      k = 0
+      while k < 24
+        r = r + v
+        k = k + 1
+      end
+      ret(itoa(r) + " 小时")

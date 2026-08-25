@@ -1,0 +1,24 @@
+# 时间换算: 分钟→秒(×60)
+name: min_sec
+version: 1.0.0
+desc: 时间换算: 分钟→秒
+url: plugins/min_sec.yml
+
+tools:
+  - id: do
+    desc: min×60→sec
+    params:
+      - id: value
+        name: 分钟
+        type: int
+        required: true
+        desc: 分
+    script: |
+      v = atoi(arg("value"))
+      r = 0
+      k = 0
+      while k < 60
+        r = r + v
+        k = k + 1
+      end
+      ret(itoa(r) + " 秒")

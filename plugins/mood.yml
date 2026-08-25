@@ -1,0 +1,42 @@
+# mood 插件：心情日志。
+# KV 按天记录心情，可记录/查看/清空。
+name: mood
+version: 1.0.0
+desc: 心情日志：按记录心情，支持查看
+url: plugins/mood.yml
+
+tools:
+  - id: log
+    desc: 记录今天的心情
+    params:
+      - id: text
+        name: 心情
+        type: string
+        required: true
+        desc: 如：开心、疲惫
+    script: |
+      n = atoi(kv_get("n"))
+      kv_set("mo" + itoa(n), arg("text"))
+      n = n + 1
+      kv_set("n", itoa(n))
+      ret("已记录，" + arg("text"))
+
+  - id: latest
+    desc: 查看最近一条心情
+    script: |
+      n = atoi(kv_get("n"))
+      if n == 0
+        ret("还没有心情记录")
+      end
+      ret("最近心情：" + kv_get("mo" + itoa(n - 1)))
+
+  - id: count
+    desc: 心情记录条数
+    script: |
+      ret("共记录 " + itoa(atoi(kv_get("n"))) + " 条")
+
+  - id: clear
+    desc: 清空心情记录
+    script: |
+      kv_set("n", "0")
+      ret("心情记录已清空")

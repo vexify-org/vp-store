@@ -1,0 +1,28 @@
+# 末词提取: 取最后一个空格后的单词
+name: last_word
+version: 1.0.0
+desc: 末词提取: 返回空格分隔的最后一个单词
+url: plugins/last_word.yml
+
+tools:
+  - id: do
+    desc: 提取末词
+    params:
+      - id: s
+        name: 文本
+        type: string
+        required: true
+        desc: 一句话
+    script: |
+      s = arg("s")
+      last = ""
+      i = 0
+      while i < len(s)
+        if substr(s, i, 1) == " "
+          last = ""
+        else
+          last = last + substr(s, i, 1)
+        end
+        i = i + 1
+      end
+      ret(last)

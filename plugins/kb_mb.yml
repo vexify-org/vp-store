@@ -1,0 +1,23 @@
+# 存储换算: KB→MB(÷1024)
+name: kb_mb
+version: 1.0.0
+desc: 存储换算: KB→MB
+url: plugins/kb_mb.yml
+
+tools:
+  - id: do
+    desc: KB÷1024→MB(取整)
+    params:
+      - id: value
+        name: 千字节
+        type: int
+        required: true
+        desc: KB
+    script: |
+      v = atoi(arg("value"))
+      q = 0
+      while v >= 1024
+        v = v - 1024
+        q = q + 1
+      end
+      ret("≈ " + itoa(q) + " MB (余 " + itoa(v) + " KB)")
